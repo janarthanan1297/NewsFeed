@@ -24,7 +24,7 @@ Design
 
 1.Splash Screen
 
-![photo1627636415](https://user-images.githubusercontent.com/78161065/127631002-aca30234-9ea0-4903-910e-64cc05712cf0.jpeg)
+![photo1627636415](https://user-images.githubusercontent.com/78161065/127636471-161d8eea-c958-49a8-9f6a-fe0f42cf31d9.jpeg)
 
 2.Login, Signup and Forgot password.
 
