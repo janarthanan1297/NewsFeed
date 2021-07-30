@@ -22,10 +22,14 @@ Design
 
 ## Output
 
-1.Splash Screen
+1. Splash Screen
 
 ![photo1627636415](https://user-images.githubusercontent.com/78161065/127631002-aca30234-9ea0-4903-910e-64cc05712cf0.jpeg)
 
 2. Login, Signup and Forgot password.
 
 ![collage](https://user-images.githubusercontent.com/78161065/127632473-a396a69c-f4e2-4ad5-a3d0-db7e5c977383.jpg)
+
+3. Home
+
+![collage2](https://user-images.githubusercontent.com/78161065/127634387-967d28d9-94b0-4de9-be80-09ea57c30163.jpg)
