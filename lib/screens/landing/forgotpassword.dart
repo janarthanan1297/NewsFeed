@@ -28,7 +28,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              height: 30,
+              height: 100,
             ),
             Padding(
               padding: const EdgeInsets.only(),
@@ -167,47 +167,59 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 1,
-          shadowColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
           ),
-        ),
-        backgroundColor: Colors.blue,
-        body: Stack(
-          children: <Widget>[
-            Container(
-              height: MediaQuery.of(context).size.height * 0.6,
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.elliptical(MediaQuery.of(context).size.width, 100),
-                  ),
-                ),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                _buildLogo(),
-                // _buildContainer(),
-              ],
-            )
-          ],
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
+      extendBodyBehindAppBar: true,
+      backgroundColor: Colors.blue,
+      body: Stack(
+        children: <Widget>[
+          ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+              )),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              _buildLogo(),
+              // _buildContainer(),
+            ],
+          )
+        ],
+      ),
     );
+  }
+}
+
+class MyClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+
+    path.lineTo(0, size.height - 100);
+    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 100);
+    path.lineTo(size.width, 0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper oldClipper) {
+    return false;
   }
 }
