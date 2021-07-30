@@ -23,3 +23,8 @@ Design
 ## Output
 
 1.Splash Screen
+
+![photo1627636415](https://user-images.githubusercontent.com/78161065/127631002-aca30234-9ea0-4903-910e-64cc05712cf0.jpeg)
+
+2. Login, Signup and Forgot password.
+
