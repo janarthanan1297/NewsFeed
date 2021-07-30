@@ -1,4 +1,4 @@
-# newsfeed
+# NewsFeed
 
 A new Flutter application.
 
