@@ -20,4 +20,6 @@ Design
 
 -https://xd.adobe.com/view/99205dd3-7fe4-44bb-9edd-dd2a75290cbf-cc73/screen/90d0c71c-26b7-44d1-b29d-6578cbd87884/
 
+## Output
 
+1.Splash Screen
