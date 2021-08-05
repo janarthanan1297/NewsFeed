@@ -40,4 +40,8 @@ Design
 
 5.Favourites
 
+![collage4](https://user-images.githubusercontent.com/78161065/128316082-7925870a-007e-4da9-901e-017a04194e3b.jpg)
+
+6.Settings
+
 
