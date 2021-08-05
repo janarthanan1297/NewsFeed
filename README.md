@@ -38,10 +38,10 @@ Design
 
 ![collage3](https://user-images.githubusercontent.com/78161065/127635847-99dafda6-bd5a-47b0-af5a-b731abb783b8.jpg)
 
-5.Favourites
+5.Favourites.
 
 ![collage4](https://user-images.githubusercontent.com/78161065/128316082-7925870a-007e-4da9-901e-017a04194e3b.jpg)
 
-6.Settings
+6.Settings and Profile.
 
-
+![collage5](https://user-images.githubusercontent.com/78161065/128316296-e33ccd6b-eb6a-4e08-9f5b-e8e05e6c3591.jpg)
