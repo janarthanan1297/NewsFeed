@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ten_news/reusable/custom_cards.dart';
 
 class Favourite extends StatefulWidget {
@@ -45,6 +46,9 @@ class _FavouriteState extends State<Favourite> {
                         child: Container(
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: 150,
+                              ),
                               Container(
                                   padding: EdgeInsets.only(top: 40),
                                   child: Icon(
@@ -54,7 +58,7 @@ class _FavouriteState extends State<Favourite> {
                                   )),
                               Text(
                                 'No Favourite',
-                                style: Theme.of(context).primaryTextTheme.subtitle2,
+                                style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 18, fontWeight: FontWeight.w600),
                               ),
                               SizedBox(
                                 height: 10,
@@ -73,6 +77,9 @@ class _FavouriteState extends State<Favourite> {
                         child: Container(
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: 150,
+                              ),
                               Container(
                                   padding: EdgeInsets.only(top: 40),
                                   child: Icon(
