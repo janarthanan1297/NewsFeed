@@ -37,3 +37,7 @@ Design
 4.News page and Categories.
 
 ![collage3](https://user-images.githubusercontent.com/78161065/127635847-99dafda6-bd5a-47b0-af5a-b731abb783b8.jpg)
+
+5.Favourites
+
+
