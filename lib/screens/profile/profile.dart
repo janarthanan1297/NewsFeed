@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ten_news/screens/landing/forgotpassword.dart';
 
-import '../../home.dart';
-
 class EditProfilePage extends StatefulWidget {
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
@@ -19,7 +17,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -176,7 +173,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),

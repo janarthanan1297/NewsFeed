@@ -28,6 +28,7 @@ getdata(link) async {
       .replaceAll('."', '. \n\n"')
       .replaceAll('"\n', '"')
       .replaceAll('+', '')
+      .replaceAll(r"\'", '')
       .replaceAll('       View this post on Instagram            ', '');
   var trim = (rest.lastIndexOf('.') != -1) ? rest.substring(0, rest.lastIndexOf('\nSHARE THIS ARTICLE ON')) : rest;
   //final List<Details> article = rest.map<Details>((json) => Details.fromJson(json)).toList();

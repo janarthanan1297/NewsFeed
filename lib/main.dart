@@ -19,6 +19,7 @@ void main() async {
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   User user = FirebaseAuth.instance.currentUser;
   @override

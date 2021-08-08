@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ten_news/home.dart';
 import '../../model/categories_model.dart';
-import 'package:ten_news/utils.dart';
 import '../../reusable/custom_cards.dart';
 
 class HomePage extends StatefulWidget {

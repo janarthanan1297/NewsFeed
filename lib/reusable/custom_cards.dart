@@ -1,14 +1,14 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ten_news/backend/web.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:image_downloader/image_downloader.dart';
-import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../home.dart';
@@ -229,7 +229,7 @@ class _WebState extends State<Web> {
   var response;
   var jsondata;
   var title;
-  var _image;
+  DateTime _currentdate = new DateTime.now();
   String email = FirebaseAuth.instance.currentUser.email;
   List<Element> discription;
 
@@ -247,7 +247,8 @@ class _WebState extends State<Web> {
       'Image': widget.imageUrl,
       'Topic': widget.topic,
       'Link': widget.link,
-      'Story': jsondata
+      'Story': jsondata,
+      'currentdate': _currentdate,
     }).then((value) => Fluttertoast.showToast(msg: 'Article added to Favourite', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM));
   }
 
@@ -331,28 +332,22 @@ class _WebState extends State<Web> {
                               widget.topic,
                               style: TextStyle(
                                 fontFamily: "Times",
-                                fontSize: 18,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: 20,
+                            width: 25,
                           ),
-                          Icon(
-                            Icons.access_time,
-                            color: Colors.grey,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(widget.time, style: TextStyle(fontFamily: "Times", fontSize: 18, color: Color(0xff8a8989))),
                           Spacer(),
                           Padding(
                             padding: EdgeInsets.only(),
                             child: IconButton(
-                              icon: Icon(
-                                Icons.favorite_border,
+                              icon: FaIcon(
+                                FontAwesomeIcons.heart,
                                 color: Colors.red,
+                                size: 20,
                               ),
                               onPressed: () {
                                 upload();
@@ -362,14 +357,39 @@ class _WebState extends State<Web> {
                         ],
                       ),
                       SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                          padding: EdgeInsets.symmetric(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              FaIcon(
+                                FontAwesomeIcons.solidClock,
+                                color: Colors.grey,
+                                size: 19,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(widget.time, style: TextStyle(fontFamily: "Times", fontSize: 18, color: Color(0xff8a8989))),
+                            ],
+                          )),
+                      SizedBox(
                         height: 20,
                       ),
-                      Text(widget.title,
-                          style: TextStyle(
-                            fontFamily: "League",
-                            fontSize: 23,
-                            fontWeight: FontWeight.bold,
-                          )),
+                      SelectableText(
+                        widget.title,
+                        style: TextStyle(
+                          fontFamily: "League",
+                          fontSize: 23,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        toolbarOptions: ToolbarOptions(
+                          copy: true,
+                          selectAll: true,
+                        ),
+                      ),
                       Divider(
                         thickness: 3,
                         color: Colors.blue,
@@ -378,10 +398,14 @@ class _WebState extends State<Web> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      SelectableText(
                         widget.subtitle + '.',
                         style: TextStyle(fontFamily: "Avenir", fontSize: 19, fontWeight: FontWeight.w500),
                         textAlign: TextAlign.justify,
+                        toolbarOptions: ToolbarOptions(
+                          copy: true,
+                          selectAll: true,
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -404,13 +428,17 @@ class _WebState extends State<Web> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text(
+                      SelectableText(
                         jsondata,
                         style: TextStyle(
                           fontFamily: "Bookman",
                           fontSize: 18,
                         ),
                         textAlign: TextAlign.justify,
+                        toolbarOptions: ToolbarOptions(
+                          copy: true,
+                          selectAll: true,
+                        ),
                       ),
                       Text(
                         "SOURCE:",
@@ -631,7 +659,6 @@ class Favouriteitem extends StatefulWidget {
 class _FavouriteitemState extends State<Favouriteitem> {
   var response;
   var title;
-  var _image;
   String email = FirebaseAuth.instance.currentUser.email;
   List<Element> discription;
 
@@ -725,28 +752,22 @@ class _FavouriteitemState extends State<Favouriteitem> {
                         widget.topic,
                         style: TextStyle(
                           fontFamily: "Times",
-                          fontSize: 18,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 25,
                     ),
-                    Icon(
-                      Icons.access_time,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(widget.time, style: TextStyle(fontFamily: "Times", fontSize: 18, color: Color(0xff8a8989))),
                     Spacer(),
                     Padding(
                       padding: EdgeInsets.only(),
                       child: IconButton(
-                        icon: Icon(
-                          Icons.favorite,
+                        icon: FaIcon(
+                          FontAwesomeIcons.solidHeart,
                           color: Colors.red,
+                          size: 20,
                         ),
                         onPressed: () {
                           //upload();
@@ -756,9 +777,10 @@ class _FavouriteitemState extends State<Favouriteitem> {
                     Padding(
                       padding: EdgeInsets.only(),
                       child: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red,
+                        icon: FaIcon(
+                          FontAwesomeIcons.solidTrashAlt,
+                          color: Colors.blue,
+                          size: 19,
                         ),
                         onPressed: () {
                           showdialog(context, 'Are you sure you want to remove this article');
@@ -768,14 +790,39 @@ class _FavouriteitemState extends State<Favouriteitem> {
                   ],
                 ),
                 SizedBox(
+                  height: 10,
+                ),
+                Container(
+                    padding: EdgeInsets.symmetric(),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        FaIcon(
+                          FontAwesomeIcons.solidClock,
+                          color: Colors.grey,
+                          size: 19,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(widget.time, style: TextStyle(fontFamily: "Times", fontSize: 18, color: Color(0xff8a8989))),
+                      ],
+                    )),
+                SizedBox(
                   height: 20,
                 ),
-                Text(widget.title,
-                    style: TextStyle(
-                      fontFamily: "League",
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold,
-                    )),
+                SelectableText(
+                  widget.title,
+                  style: TextStyle(
+                    fontFamily: "League",
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  toolbarOptions: ToolbarOptions(
+                    copy: true,
+                    selectAll: true,
+                  ),
+                ),
                 Divider(
                   thickness: 3,
                   color: Colors.blue,
@@ -784,10 +831,14 @@ class _FavouriteitemState extends State<Favouriteitem> {
                 SizedBox(
                   height: 10,
                 ),
-                Text(
+                SelectableText(
                   widget.subtitle,
                   style: TextStyle(fontFamily: "Avenir", fontSize: 19, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.justify,
+                  toolbarOptions: ToolbarOptions(
+                    copy: true,
+                    selectAll: true,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -810,13 +861,17 @@ class _FavouriteitemState extends State<Favouriteitem> {
                 SizedBox(
                   height: 5,
                 ),
-                Text(
+                SelectableText(
                   widget.story,
                   style: TextStyle(
                     fontFamily: "Bookman",
                     fontSize: 18,
                   ),
                   textAlign: TextAlign.justify,
+                  toolbarOptions: ToolbarOptions(
+                    copy: true,
+                    selectAll: true,
+                  ),
                 ),
                 Text(
                   "SOURCE:",
@@ -862,7 +917,7 @@ class _FavouriteitemState extends State<Favouriteitem> {
         return;
       }
 
-      // Below is a method of obtaining saved image information.
+      // ignore: unused_local_variable
       var fileName = await ImageDownloader.findName(imageId);
       var path = await ImageDownloader.findPath(imageId);
       var size = await ImageDownloader.findByteSize(imageId);

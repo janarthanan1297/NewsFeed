@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ten_news/model/categories_model.dart';
 import '../../reusable/custom_cards.dart';
-import 'package:ten_news/utils.dart';
 
 class Search extends StatefulWidget {
   final Map<String, List> newsData;

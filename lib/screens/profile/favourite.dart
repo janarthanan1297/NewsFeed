@@ -16,7 +16,6 @@ class _FavouriteState extends State<Favourite> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
       child: Column(
@@ -26,7 +25,7 @@ class _FavouriteState extends State<Favourite> {
           ),
           Expanded(
               child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection(email).orderBy('Time', descending: true).snapshots(),
+                  stream: FirebaseFirestore.instance.collection(email).orderBy('currentdate', descending: true).snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
                       return Center(
@@ -34,7 +33,7 @@ class _FavouriteState extends State<Favourite> {
                           child: Column(
                             children: [
                               Container(
-                                  padding: EdgeInsets.only(top: 70), child: Container(height: 150, width: 150, child: CircularProgressIndicator())),
+                                  padding: EdgeInsets.only(top: 70), child: Container(height: 50, width: 50, child: CircularProgressIndicator())),
                             ],
                           ),
                         ),
