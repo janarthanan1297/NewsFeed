@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                             // print(timeIST);
                             return HomePageCard(
                               title: _newsData[key][i]['title']['__cdata'].replaceAll(r"\'", ''),
-                              subtitle: _newsData[key][i]['description']['__cdata'],
+                              subtitle: _newsData[key][i]['description']['__cdata'].replaceAll(r"\", ''),
                               time: time.substring(5, 22),
                               imageUrl: _newsData[key][i]['media\$content']['url'],
                               link: _newsData[key][i]['link']['__cdata'],

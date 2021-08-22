@@ -265,142 +265,144 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: isLoading
-          ? Container(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 10, 25, 25),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Top News Updates",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontFamily: "Times",
-                          fontSize: 34,
-                          fontWeight: FontWeight.w700,
+          ? SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 10, 25, 25),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Top News Updates",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontFamily: "Times",
+                            fontSize: 34,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 20, top: 10),
-                          child: Row(
-                            children: [
-                              Skeleton(
-                                style: SkeletonStyle.text,
-                                textColor: Colors.grey,
-                                height: 14,
-                                width: 100,
-                              ),
-                              Spacer(),
-                              Skeleton(
-                                style: SkeletonStyle.text,
-                                textColor: Colors.grey,
-                                height: 14,
-                                width: 50,
-                              ),
-                              Spacer(),
-                              Skeleton(
-                                style: SkeletonStyle.text,
-                                textColor: Colors.grey,
-                                height: 14,
-                                width: 50,
-                              ),
-                              Spacer(),
-                              Skeleton(
-                                style: SkeletonStyle.text,
-                                textColor: Colors.grey,
-                                height: 14,
-                                width: 80,
-                              ),
-                              Spacer(),
-                              Skeleton(
-                                style: SkeletonStyle.text,
-                                textColor: Colors.grey,
-                                height: 14,
-                                width: 50,
-                              ),
-                            ],
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20, top: 10),
+                            child: Row(
+                              children: [
+                                Skeleton(
+                                  style: SkeletonStyle.text,
+                                  textColor: Colors.grey,
+                                  height: 14,
+                                  width: 100,
+                                ),
+                                Spacer(),
+                                Skeleton(
+                                  style: SkeletonStyle.text,
+                                  textColor: Colors.grey,
+                                  height: 14,
+                                  width: 50,
+                                ),
+                                Spacer(),
+                                Skeleton(
+                                  style: SkeletonStyle.text,
+                                  textColor: Colors.grey,
+                                  height: 14,
+                                  width: 50,
+                                ),
+                                Spacer(),
+                                Skeleton(
+                                  style: SkeletonStyle.text,
+                                  textColor: Colors.grey,
+                                  height: 14,
+                                  width: 80,
+                                ),
+                                Spacer(),
+                                Skeleton(
+                                  style: SkeletonStyle.text,
+                                  textColor: Colors.grey,
+                                  height: 14,
+                                  width: 50,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: Skeleton(
-                            style: SkeletonStyle.text,
-                            textColor: Colors.grey,
-                            height: 203,
-                            width: MediaQuery.of(context).size.width,
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 203,
+                              width: MediaQuery.of(context).size.width,
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Skeleton(
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 14,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 150, bottom: 10),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 14,
+                              width: 220,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 14,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 40),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 203,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 14,
+                              width: MediaQuery.of(context).size.width,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 120, bottom: 10),
+                            child: Skeleton(
+                              style: SkeletonStyle.text,
+                              textColor: Colors.grey,
+                              height: 14,
+                              width: 250,
+                            ),
+                          ),
+                          Skeleton(
                             style: SkeletonStyle.text,
                             textColor: Colors.grey,
                             height: 14,
                             width: MediaQuery.of(context).size.width,
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 150, bottom: 10),
-                          child: Skeleton(
-                            style: SkeletonStyle.text,
-                            textColor: Colors.grey,
-                            height: 14,
-                            width: 220,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: Skeleton(
-                            style: SkeletonStyle.text,
-                            textColor: Colors.grey,
-                            height: 14,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 40),
-                          child: Skeleton(
-                            style: SkeletonStyle.text,
-                            textColor: Colors.grey,
-                            height: 203,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Skeleton(
-                            style: SkeletonStyle.text,
-                            textColor: Colors.grey,
-                            height: 14,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 120, bottom: 10),
-                          child: Skeleton(
-                            style: SkeletonStyle.text,
-                            textColor: Colors.grey,
-                            height: 14,
-                            width: 250,
-                          ),
-                        ),
-                        Skeleton(
-                          style: SkeletonStyle.text,
-                          textColor: Colors.grey,
-                          height: 14,
-                          width: MediaQuery.of(context).size.width,
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             )
           : <Widget>[
