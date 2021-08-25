@@ -4,7 +4,7 @@ NewsFeed is the Flutter application based on XML parsing and HTML parsing. In th
 
 ## Inspiration
 
-This Flutter application I got some UI design inspirations.
+For this Flutter application I got some UI design inspirations from.
 
 For Login and Signup
 
