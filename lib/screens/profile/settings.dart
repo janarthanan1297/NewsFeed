@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ten_news/screens/profile/profile.dart';
+import 'package:News_Feed/screens/profile/profile.dart';
 import '../../main.dart';
 
 class SettingsTwoPage extends StatefulWidget {
@@ -14,10 +14,10 @@ class SettingsTwoPage extends StatefulWidget {
 
 class _SettingState extends State<SettingsTwoPage> {
   bool value1 = false;
-  bool value2;
-  String username = FirebaseAuth.instance.currentUser.displayName;
-  String profile = FirebaseAuth.instance.currentUser.photoURL;
-  String email = FirebaseAuth.instance.currentUser.email;
+  bool? value2;
+  String? username = FirebaseAuth.instance.currentUser?.displayName;
+  String? profile = FirebaseAuth.instance.currentUser?.photoURL;
+  String? email = FirebaseAuth.instance.currentUser?.email;
   final TextStyle whiteText = TextStyle(
     color: Colors.white,
   );
@@ -42,7 +42,10 @@ class _SettingState extends State<SettingsTwoPage> {
         ),
       ),
       body: Theme(
-        data: Theme.of(context).copyWith(brightness: Brightness.dark, primaryColor: Colors.purple, backgroundColor: Colors.white),
+        data: Theme.of(context).copyWith(
+            brightness: Brightness.dark,
+            primaryColor: Colors.purple,
+            backgroundColor: Colors.white),
         child: DefaultTextStyle(
           style: TextStyle(
             color: Colors.black,
@@ -60,9 +63,17 @@ class _SettingState extends State<SettingsTwoPage> {
                       decoration: BoxDecoration(
                         //color: primary,
                         shape: BoxShape.circle,
-                        boxShadow: [BoxShadow(spreadRadius: 2, blurRadius: 10, color: Colors.black.withOpacity(0.1), offset: Offset(0, 10))],
+                        boxShadow: [
+                          BoxShadow(
+                              spreadRadius: 2,
+                              blurRadius: 10,
+                              color: Colors.black.withOpacity(0.1),
+                              offset: Offset(0, 10))
+                        ],
                         image: DecorationImage(
-                          image: NetworkImage(profile == null ? "https://i.stack.imgur.com/l60Hf.png" : profile),
+                          image: NetworkImage(profile == null
+                              ? "https://i.stack.imgur.com/l60Hf.png"
+                              : profile.toString()),
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(
@@ -77,11 +88,14 @@ class _SettingState extends State<SettingsTwoPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            username,
-                            style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 22, fontWeight: FontWeight.bold),
+                            username ?? '',
+                            style: GoogleFonts.montserrat(
+                                color: Color.fromRGBO(59, 57, 60, 1),
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            email,
+                            email ?? '',
                             style: TextStyle(
                               color: Colors.grey.shade600,
                             ),
@@ -91,36 +105,45 @@ class _SettingState extends State<SettingsTwoPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 40.0),
+                // ListTile(
+                //   contentPadding:
+                //       EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 10),
+                //   title: Text(
+                //     "Profile Settings",
+                //     style: GoogleFonts.montserrat(
+                //         color: Color.fromRGBO(59, 57, 60, 1),
+                //         fontSize: 18,
+                //         fontWeight: FontWeight.w600),
+                //   ),
+                //   subtitle: Text(
+                //     username ?? '',
+                //     style: greyTExt,
+                //   ),
+                //   leading: CircleAvatar(
+                //       backgroundColor: Colors.orange,
+                //       child: IconButton(
+                //         icon: Icon(Icons.person, color: Colors.white),
+                //         onPressed: null,
+                //       )),
+                //   trailing: Icon(
+                //     Icons.keyboard_arrow_right,
+                //     color: Colors.grey,
+                //   ),
+                //   onTap: () {
+                //     Navigator.of(context).push(MaterialPageRoute(
+                //         builder: (BuildContext context) => EditProfilePage()));
+                //   },
+                // ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 10),
-                  title: Text(
-                    "Profile Settings",
-                    style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  subtitle: Text(
-                    username,
-                    style: greyTExt,
-                  ),
-                  leading: CircleAvatar(
-                      backgroundColor: Colors.orange,
-                      child: IconButton(
-                        icon: Icon(Icons.person, color: Colors.white),
-                        onPressed: null,
-                      )),
-                  trailing: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey,
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => EditProfilePage()));
-                  },
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: 0, right: 10, bottom: 10),
+                  contentPadding:
+                      EdgeInsets.only(left: 0, right: 10, bottom: 10),
                   title: Text(
                     "Feedback",
-                    style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 18, fontWeight: FontWeight.w600),
+                    style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(59, 57, 60, 1),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
                   ),
                   leading: CircleAvatar(
                       backgroundColor: Colors.blue,
@@ -140,10 +163,14 @@ class _SettingState extends State<SettingsTwoPage> {
                   },
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: 0, right: 10, bottom: 10),
+                  contentPadding:
+                      EdgeInsets.only(left: 0, right: 10, bottom: 10),
                   title: Text(
                     "Logout",
-                    style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 18, fontWeight: FontWeight.w600),
+                    style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(59, 57, 60, 1),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
                   ),
                   leading: CircleAvatar(
                       backgroundColor: Colors.red,
@@ -184,7 +211,7 @@ class FeedbackPage extends StatefulWidget {
 
 class _Feedback extends State<FeedbackPage> {
   TextEditingController details = TextEditingController();
-  String email = FirebaseAuth.instance.currentUser.email;
+  String? email = FirebaseAuth.instance.currentUser?.email;
 
   upload() async {
     await FirebaseFirestore.instance.collection('Feedback').add({
@@ -202,7 +229,10 @@ class _Feedback extends State<FeedbackPage> {
         backgroundColor: Colors.white,
         title: Text(
           "Feedback",
-          style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 22, fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+              color: Color.fromRGBO(59, 57, 60, 1),
+              fontSize: 22,
+              fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         leading: Builder(builder: (BuildContext context) {
@@ -225,8 +255,12 @@ class _Feedback extends State<FeedbackPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 30),
-              child: Text("We also welcome your ideas, requests or comments. Please enter your feedback here:",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.grey)),
+              child: Text(
+                  "We also welcome your ideas, requests or comments. Please enter your feedback here:",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.grey)),
             ),
             TextFormField(
               keyboardType: TextInputType.multiline,
@@ -237,14 +271,14 @@ class _Feedback extends State<FeedbackPage> {
                 border: InputBorder.none,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide(color: Colors.grey[300]),
+                  borderSide: BorderSide(color: Colors.grey.shade300),
                 ),
                 hintText: 'Add feedback...',
                 fillColor: Colors.grey[300],
                 filled: true,
               ),
               validator: (value) {
-                if (value.isEmpty) {
+                if (value == null) {
                   return 'please give detail ';
                 }
                 return null;
@@ -257,7 +291,10 @@ class _Feedback extends State<FeedbackPage> {
               onTap: () {
                 Navigator.pop(context);
                 upload();
-                Fluttertoast.showToast(msg: 'Thanks for your Feedback', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                Fluttertoast.showToast(
+                    msg: 'Thanks for your Feedback',
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM);
               },
               child: Container(
                 width: size.width * 0.75,
@@ -269,7 +306,10 @@ class _Feedback extends State<FeedbackPage> {
                 child: Center(
                   child: Text(
                     "Send",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white),
                   ),
                 ),
               ),

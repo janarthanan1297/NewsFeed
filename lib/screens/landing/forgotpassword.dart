@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ten_news/main.dart';
+import 'package:News_Feed/main.dart';
 
 class ForgotPassword extends StatefulWidget {
   @override
@@ -14,9 +14,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   FocusNode myFocusNode1 = new FocusNode();
   TextEditingController emailController = TextEditingController();
 
-  String email;
+  String? email;
 
-  String password;
+  String? password;
   Widget _buildLogo() {
     return Form(
       key: _formKey,
@@ -44,11 +44,21 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
                 Text(
                   'NEWS',
-                  style: TextStyle(fontFamily: "Stencil", fontSize: 36, color: Colors.black, fontWeight: FontWeight.w700, letterSpacing: 2),
+                  style: TextStyle(
+                      fontFamily: "Stencil",
+                      fontSize: 36,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 2),
                 ),
                 Text(
                   'FEED',
-                  style: TextStyle(fontFamily: "Stencil", fontSize: 36, color: Colors.blue, fontWeight: FontWeight.w700, letterSpacing: 2),
+                  style: TextStyle(
+                      fontFamily: "Stencil",
+                      fontSize: 36,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 2),
                 )
               ],
             ),
@@ -68,48 +78,56 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
             Container(
                 //height: 50,
-                decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Padding(
-                      padding: EdgeInsets.only(left: 0, right: 0),
-                      child: TextFormField(
-                        focusNode: myFocusNode,
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            alignLabelWithHint: true,
-                            labelStyle:
-                                TextStyle(fontSize: myFocusNode.hasFocus ? 24 : 18.0, color: myFocusNode.hasFocus ? Colors.blue : Colors.grey),
-                            labelText: 'Enter email-id',
-                            filled: true,
-                            // isDense: true,
-                            fillColor: Colors.grey[200],
-                            border: InputBorder.none,
-                            prefixIcon: IconButton(
-                                icon: Icon(
-                                  Icons.email,
+                decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                          padding: EdgeInsets.only(left: 0, right: 0),
+                          child: TextFormField(
+                            focusNode: myFocusNode,
+                            controller: emailController,
+                            decoration: InputDecoration(
+                                alignLabelWithHint: true,
+                                labelStyle: TextStyle(
+                                    fontSize: myFocusNode.hasFocus ? 24 : 18.0,
+                                    color: myFocusNode.hasFocus
+                                        ? Colors.blue
+                                        : Colors.grey),
+                                labelText: 'Enter email-id',
+                                filled: true,
+                                // isDense: true,
+                                fillColor: Colors.grey[200],
+                                border: InputBorder.none,
+                                prefixIcon: IconButton(
+                                    icon: Icon(
+                                      Icons.email,
+                                    ),
+                                    onPressed: null),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.grey.shade200,
+                                  ),
                                 ),
-                                onPressed: null),
-                            enabledBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.grey[200],
-                              ),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(15.0),
-                                borderSide: new BorderSide(
-                                  color: Colors.blue,
-                                ))),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Enter Email Address';
-                          } else if (!value.contains('@')) {
-                            return 'Please enter a valid email address!';
-                          }
-                          return null;
-                        },
-                      ))
-                ])),
+                                focusedBorder: new OutlineInputBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(15.0),
+                                    borderSide: new BorderSide(
+                                      color: Colors.blue,
+                                    ))),
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Enter Email Address';
+                              } else if (!value.contains('@')) {
+                                return 'Please enter a valid email address!';
+                              }
+                              return null;
+                            },
+                          ))
+                    ])),
             SizedBox(
               height: 16,
             ),
@@ -122,27 +140,36 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: Container(
                   width: MediaQuery.of(context).size.width * 0.60,
                   height: 50,
-                  decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(15), boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 5,
-                      spreadRadius: 01,
-                      offset: const Offset(0.0, 5.0),
-                    )
-                  ]),
+                  decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 5,
+                          spreadRadius: 01,
+                          offset: const Offset(0.0, 5.0),
+                        )
+                      ]),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
+                      backgroundColor: Colors.blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                     ),
                     onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text);
-                        Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => MyApp()));
+                      if (_formKey.currentState!.validate()) {
+                        FirebaseAuth.instance.sendPasswordResetEmail(
+                            email: emailController.text);
+                        Navigator.pushReplacement(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => MyApp()));
                         Fluttertoast.showToast(
-                            msg: 'Reset mail sent to your email-id', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                            msg: 'Reset mail sent to your email-id',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM);
                       }
                     },
                     child: Text(
@@ -210,7 +237,8 @@ class MyClipper extends CustomClipper<Path> {
     var path = Path();
 
     path.lineTo(0, size.height - 100);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 100);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 100);
     path.lineTo(size.width, 0);
     path.close();
 

@@ -1,14 +1,17 @@
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ten_news/backend/rss_to_json.dart';
+import 'package:News_Feed/backend/rss_to_json.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:skeleton_animation/skeleton_animation.dart';
-import 'package:ten_news/screens/home/homepage.dart';
-import 'package:ten_news/screens/profile/favourite.dart';
-import 'package:ten_news/screens/profile/profile.dart';
-import 'package:ten_news/screens/profile/settings.dart';
-import 'package:ten_news/screens/search/search.dart';
+import 'package:News_Feed/screens/home/homepage.dart';
+import 'package:News_Feed/screens/profile/favourite.dart';
+import 'package:News_Feed/screens/profile/profile.dart';
+import 'package:News_Feed/screens/profile/settings.dart';
+import 'package:News_Feed/screens/search/search.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 import 'main.dart';
 
@@ -19,7 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentIndex = 0;
-  String profile = FirebaseAuth.instance.currentUser.photoURL;
+  String? profile = FirebaseAuth.instance.currentUser?.photoURL;
 
   void changePage(int index) {
     setState(() {
@@ -48,7 +51,7 @@ class _HomeState extends State<Home> {
     ]).then((value) {
       value[0] = [];
       value.forEach((element) {
-        value[0].addAll([...element ?? []]);
+        value[0].addAll([...element]);
       });
       value[0].shuffle();
       newsData['topnews'] = value[0].sublist(0, 15);
@@ -102,11 +105,19 @@ class _HomeState extends State<Home> {
               ),
               Text(
                 'NEWS',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 28, color: Colors.black, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                    fontFamily: "Stencil",
+                    fontSize: 28,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700),
               ),
               Text(
                 'FEED',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 28, color: Colors.blue, fontWeight: FontWeight.w700),
+                style: TextStyle(
+                    fontFamily: "Stencil",
+                    fontSize: 28,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w700),
               )
             ],
           ),
@@ -121,25 +132,39 @@ class _HomeState extends State<Home> {
         child: Drawer(
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 30,
-              ),
+              Spacer(),
               Container(
-                height: 280,
+                height: 170,
                 padding: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(width: 4, color: Theme.of(context).scaffoldBackgroundColor),
-                      boxShadow: [BoxShadow(spreadRadius: 2, blurRadius: 10, color: Colors.black.withOpacity(0.1), offset: Offset(0, 10))],
-                    ),
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(profile == null ? "https://i.stack.imgur.com/l60Hf.png" : profile),
-                      radius: 100.0,
-                    ),
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        width: 4,
+                        color: Theme.of(context).scaffoldBackgroundColor),
+                    boxShadow: [
+                      BoxShadow(
+                          spreadRadius: 2,
+                          blurRadius: 10,
+                          color: Colors.black.withOpacity(0.1),
+                          offset: Offset(0, 10))
+                    ],
+                    image: DecorationImage(
+                        fit: BoxFit.contain,
+                        image: NetworkImage(profile == null
+                            ? "https://i.stack.imgur.com/l60Hf.png"
+                            : profile.toString())),
                   ),
+                  // child: CircleAvatar(
+                  //   backgroundImage: NetworkImage(profile == null
+                  //       ? "https://i.stack.imgur.com/l60Hf.png"
+                  //       : profile.toString()),
+                  //   radius: 100.0,
+                  // ),
                 ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Divider(
                 thickness: 2,
@@ -150,12 +175,12 @@ class _HomeState extends State<Home> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    currentIndex = 3;
+                    currentIndex = 1;
                   });
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Profile',
+                  'Categories',
                   style: TextStyle(
                     fontFamily: 'Avenir',
                     fontSize: 24,
@@ -169,7 +194,10 @@ class _HomeState extends State<Home> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsTwoPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SettingsTwoPage()));
                 },
                 child: Text(
                   'Settings',
@@ -207,10 +235,16 @@ class _HomeState extends State<Home> {
               InkWell(
                 onTap: () async {
                   await FirebaseAuth.instance.signOut();
+                  GoogleSignIn().disconnect();
+
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => MyApp()),
                   );
+                  Fluttertoast.showToast(
+                      msg: 'Logged out successfully',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM);
                 },
                 child: Text(
                   'Log Out',
@@ -240,6 +274,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+              Spacer(),
               Expanded(
                   child: Align(
                 alignment: Alignment.bottomCenter,
@@ -249,7 +284,7 @@ class _HomeState extends State<Home> {
                   color: Colors.black,
                   child: Center(
                     child: Text(
-                      'v1.0.1',
+                      'v1.0',
                       style: TextStyle(
                         fontFamily: 'Avenir',
                         fontSize: 20,
@@ -348,7 +383,8 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 150, bottom: 10),
+                            padding:
+                                const EdgeInsets.only(right: 150, bottom: 10),
                             child: Skeleton(
                               style: SkeletonStyle.text,
                               textColor: Colors.grey,
@@ -384,7 +420,8 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 120, bottom: 10),
+                            padding:
+                                const EdgeInsets.only(right: 120, bottom: 10),
                             child: Skeleton(
                               style: SkeletonStyle.text,
                               textColor: Colors.grey,
@@ -413,68 +450,79 @@ class _HomeState extends State<Home> {
                 newsData: newsData,
               ),
               Favourite(),
-              ProfilePage()
+              // ProfilePage()
             ][currentIndex],
-      bottomNavigationBar: BubbleBottomBar(
-        opacity: .2,
+      bottomNavigationBar: StylishBottomBar(
+        option: BubbleBarOptions(
+          // barStyle: BubbleBarStyle.vertical,
+          barStyle: BubbleBarStyle.vertical,
+          bubbleFillStyle: BubbleFillStyle.fill,
+          // bubbleFillStyle: BubbleFillStyle.outlined,
+          opacity: 0.3,
+        ),
         currentIndex: currentIndex,
         onTap: changePage,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         elevation: 8,
-        items: <BubbleBottomBarItem>[
-          BubbleBottomBarItem(
+        items: [
+          BottomBarItem(
               backgroundColor: Colors.blue,
               icon: Icon(
                 Icons.home_outlined,
-                size: 30,
                 color: Colors.black54,
               ),
-              activeIcon: Icon(
+              selectedIcon: Icon(
                 Icons.home_outlined,
-                size: 30,
                 color: Colors.blue,
               ),
               title: Text("Home")),
-          BubbleBottomBarItem(
+          BottomBarItem(
               backgroundColor: Colors.blue,
               icon: SvgPicture.asset(
                 'assets/icons/grid.svg',
-                width: 21,
+                // width: 21,
                 color: Colors.black54,
                 height: 21,
               ),
-              activeIcon: SvgPicture.asset(
+              selectedIcon: SvgPicture.asset(
                 'assets/icons/grid.svg',
-                width: 21,
+                // width: 21,
                 color: Colors.blue,
-                height: 21,
               ),
               title: Text("Categories")),
-          BubbleBottomBarItem(
+          BottomBarItem(
               backgroundColor: Colors.blue,
               icon: Icon(
                 Icons.favorite_border,
                 size: 30,
                 color: Colors.black54,
               ),
-              activeIcon: Icon(
+              selectedIcon: Icon(
                 Icons.favorite_border,
                 size: 30,
                 color: Colors.blue,
               ),
               title: Text("Favourites")),
-          BubbleBottomBarItem(
-              backgroundColor: Colors.blue,
-              icon: Container(
-                height: 24,
-                width: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(image: NetworkImage(profile == null ? "https://i.stack.imgur.com/l60Hf.png" : profile)),
-                  boxShadow: [BoxShadow(color: Color(0x5c000000), offset: Offset(0, 1), blurRadius: 5)],
-                ),
-              ),
-              title: Text("Profile")),
+          // BottomBarItem(
+          //     backgroundColor: Colors.blue,
+          //     icon: Container(
+          //       height: 24,
+          //       width: 24,
+          //       decoration: BoxDecoration(
+          //         shape: BoxShape.circle,
+          //         image: DecorationImage(
+          //             image: NetworkImage(profile == null
+          //                 ? "https://i.stack.imgur.com/l60Hf.png"
+          //                 : profile.toString())),
+          //         boxShadow: [
+          //           BoxShadow(
+          //               color: Color(0x5c000000),
+          //               offset: Offset(0, 1),
+          //               blurRadius: 5)
+          //         ],
+          //       ),
+          //     ),
+          //     title: Text("Profile")),
         ],
       ),
     );

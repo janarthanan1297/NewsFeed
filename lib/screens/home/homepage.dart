@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:ten_news/home.dart';
+import 'package:News_Feed/home.dart';
 import '../../model/categories_model.dart';
 import '../../reusable/custom_cards.dart';
 
 class HomePage extends StatefulWidget {
-  final Map<String, List> newsData;
+  final Map<dynamic, dynamic> newsData;
 
-  const HomePage({Key key, this.newsData}) : super(key: key);
+  const HomePage({Key? key, required this.newsData}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
-  TabController _tabController;
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  ScrollController? _scrollController;
+  TabController? _tabController;
   int currentIndex = 0;
   var item;
   Map<String, List> _newsData = Map<String, List>();
-  GlobalKey<RefreshIndicatorState> refreshKey;
+  GlobalKey<RefreshIndicatorState>? refreshKey;
 
   @override
   void initState() {
@@ -25,14 +26,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     _scrollController = ScrollController();
 
     _tabController = TabController(length: categories.length, vsync: this);
-    _tabController.addListener(_smoothScrollToTop);
+    _tabController?.addListener(_smoothScrollToTop);
     setState(() {
       _newsData = Map.from(widget.newsData);
     });
   }
 
   _smoothScrollToTop() {
-    _scrollController.animateTo(
+    _scrollController?.animateTo(
       0,
       duration: Duration(microseconds: 300),
       curve: Curves.ease,
@@ -46,13 +47,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   }
 
   Future<Null> refreshList() async {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home()));
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Home()));
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _scrollController.dispose();
+    _tabController?.dispose();
+    _scrollController?.dispose();
     super.dispose();
   }
 
@@ -90,10 +92,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                   isScrollable: true,
                   indicator: UnderlineTabIndicator(),
                   labelColor: Colors.blue,
-                  labelStyle: TextStyle(fontFamily: "Avenir", fontSize: 19, fontWeight: FontWeight.bold),
+                  labelStyle: TextStyle(
+                      fontFamily: "Avenir",
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold),
                   unselectedLabelColor: Colors.black45,
-                  unselectedLabelStyle: TextStyle(fontFamily: "Avenir", fontSize: 18, fontWeight: FontWeight.normal),
-                  tabs: List.generate(categories.length, (index) => Text(categories[index].name))),
+                  unselectedLabelStyle: TextStyle(
+                      fontFamily: "Avenir",
+                      fontSize: 18,
+                      fontWeight: FontWeight.normal),
+                  tabs: List.generate(categories.length,
+                      (index) => Text(categories[index].name))),
             ),
           ),
         ];
@@ -104,26 +113,36 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
             children: List.generate(
               categories.length,
               (index) {
-                var key = categories[index].imageUrl.toString().split("/")[3].split(".")[0].replaceAll("_", "-");
+                var key = categories[index]
+                    .imageUrl
+                    .toString()
+                    .split("/")[3]
+                    .split(".")[0]
+                    .replaceAll("_", "-");
                 item = _newsData[key]?.length ?? 0;
                 return RefreshIndicator(
                   onRefresh: refreshList,
                   key: refreshKey,
-                  child: (item <= 1)
+                  child: (item < 1)
                       ? Container()
                       : ListView.builder(
                           padding: EdgeInsets.symmetric(horizontal: 25),
                           itemBuilder: (context, i) {
-                            String time = _newsData[key][i]['pubDate']['__cdata'];
+                            String time =
+                                _newsData[key]?[i]['pubDate']['__cdata'];
                             //DateTime timeIST = DateTime.parse(time);
                             // timeIST = timeIST.add(Duration(hours: 5)).add(Duration(minutes: 30));
                             // print(timeIST);
                             return HomePageCard(
-                              title: _newsData[key][i]['title']['__cdata'].replaceAll(r"\'", ''),
-                              subtitle: _newsData[key][i]['description']['__cdata'].replaceAll(r"\", ''),
+                              title: _newsData[key]?[i]['title']['__cdata']
+                                  .replaceAll(r"\'", ''),
+                              subtitle: _newsData[key]?[i]['description']
+                                      ['__cdata']
+                                  .replaceAll(r"\", ''),
                               time: time.substring(5, 22),
-                              imageUrl: _newsData[key][i]['media\$content']['url'],
-                              link: _newsData[key][i]['link']['__cdata'],
+                              imageUrl: _newsData[key]?[i]['media\$content']
+                                  ['url'],
+                              link: _newsData[key]?[i]['link']['__cdata'],
                               topic: categories[index].name.toString(),
                             );
                           },

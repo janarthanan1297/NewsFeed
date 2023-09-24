@@ -1,27 +1,35 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ten_news/backend/web.dart';
+import 'package:News_Feed/backend/web.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:image_downloader/image_downloader.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart' as path_Provider;
+import 'package:path/path.dart' as path;
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:network_to_file_image/network_to_file_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../home.dart';
 
 class HomePageCard extends StatelessWidget {
   final imageUrl, title, subtitle, time, link, topic;
   const HomePageCard({
-    Key key,
+    Key? key,
     this.imageUrl = "assets/cardimage.jpg",
     this.topic = "",
-    this.title = "Watch: Gameplay for the first 13 games optimised for Xbox Series X",
+    this.title =
+        "Watch: Gameplay for the first 13 games optimised for Xbox Series X",
     this.time = "07 May  07:19",
-    this.subtitle = "Microsoft showcased 13 games, with their gameplay trailers, that will come to Xbox Series X with optimisations.",
+    this.subtitle =
+        "Microsoft showcased 13 games, with their gameplay trailers, that will come to Xbox Series X with optimisations.",
     this.link =
         "https://www.hindustantimes.com/education/competitive-exams/neet-2021-registration-begins-here-s-how-to-apply-at-ntaneetnicin-101626178496700.html",
   }) : super(key: key);
@@ -32,7 +40,14 @@ class HomePageCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Web(link: link, title: title, time: time, subtitle: subtitle, imageUrl: imageUrl, topic: topic)),
+          MaterialPageRoute(
+              builder: (context) => Web(
+                  link: link,
+                  title: title,
+                  time: time,
+                  subtitle: subtitle,
+                  imageUrl: imageUrl,
+                  topic: topic)),
         );
       },
       child: Padding(
@@ -64,7 +79,8 @@ class HomePageCard extends StatelessWidget {
                     color: Color(0xff707070),
                     width: 1,
                   ),
-                  image: DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.fill),
+                  image: DecorationImage(
+                      image: NetworkImage(imageUrl), fit: BoxFit.fill),
                 ),
                 /* child: Align(
                   alignment: Alignment.bottomCenter,
@@ -95,11 +111,19 @@ class HomePageCard extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text(time, style: TextStyle(fontFamily: "Times", fontSize: 13, color: Color(0xff8a8989))),
+            Text(time,
+                style: TextStyle(
+                    fontFamily: "Times",
+                    fontSize: 13,
+                    color: Color(0xff8a8989))),
             SizedBox(
               height: 7,
             ),
-            Text(title, style: TextStyle(fontFamily: "League", fontSize: 23, fontWeight: FontWeight.bold)),
+            Text(title,
+                style: TextStyle(
+                    fontFamily: "League",
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold)),
             Divider(
               thickness: 2,
             )
@@ -114,7 +138,7 @@ class CategoriesCard extends StatelessWidget {
   final imageUrl, category;
 
   CategoriesCard({
-    Key key,
+    Key? key,
     this.imageUrl,
     this.category,
   }) : super(key: key);
@@ -163,9 +187,10 @@ class SearchCard extends StatelessWidget {
   final imageUrl, title, date;
 
   const SearchCard(
-      {Key key,
+      {Key? key,
       this.imageUrl = "assets/cardimage.jpg",
-      this.title = "Watch: Gameplay for the first 13 games optimised for Xbox Series X",
+      this.title =
+          "Watch: Gameplay for the first 13 games optimised for Xbox Series X",
       this.date = "07 May  07:19"})
       : super(key: key);
   @override
@@ -181,7 +206,8 @@ class SearchCard extends StatelessWidget {
                 width: 155,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
-                  image: DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.fill),
+                  image: DecorationImage(
+                      image: AssetImage(imageUrl), fit: BoxFit.fill),
                 ),
               ),
               SizedBox(
@@ -219,7 +245,15 @@ class SearchCard extends StatelessWidget {
 
 class Web extends StatefulWidget {
   final link, imageUrl, title, subtitle, time, topic;
-  Web({Key key, this.link, this.imageUrl, this.subtitle, this.time, this.title, this.topic}) : super(key: key);
+  Web(
+      {Key? key,
+      this.link,
+      this.imageUrl,
+      this.subtitle,
+      this.time,
+      this.title,
+      this.topic})
+      : super(key: key);
 
   @override
   _WebState createState() => _WebState();
@@ -230,8 +264,8 @@ class _WebState extends State<Web> {
   var jsondata;
   var title;
   DateTime _currentdate = new DateTime.now();
-  String email = FirebaseAuth.instance.currentUser.email;
-  List<Element> discription;
+  String? email = FirebaseAuth.instance.currentUser?.email;
+  List<Element>? discription;
 
   fetchdata() async {
     jsondata = await getdata(widget.link);
@@ -249,7 +283,10 @@ class _WebState extends State<Web> {
       'Link': widget.link,
       'Story': jsondata,
       'currentdate': _currentdate,
-    }).then((value) => Fluttertoast.showToast(msg: 'Article added to Favourite', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM));
+    }).then((value) => Fluttertoast.showToast(
+        msg: 'Article added to Favourite',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM));
   }
 
   @override
@@ -278,221 +315,277 @@ class _WebState extends State<Web> {
               valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue),
             ))
           : SingleChildScrollView(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Container(
-                  height: 300,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 0,
-                        height: 260,
-                        width: MediaQuery.of(context).size.width,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(image: NetworkImage(widget.imageUrl), fit: BoxFit.fill),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                          top: 35,
-                          left: 17,
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.white54,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 5),
-                              child: IconButton(
-                                icon: Icon(Icons.arrow_back_ios),
-                                iconSize: 22,
-                                color: Colors.black,
-                                splashColor: Colors.blue,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 300,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 0,
+                            height: 260,
+                            width: MediaQuery.of(context).size.width,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(widget.imageUrl),
+                                    fit: BoxFit.fill),
                               ),
                             ),
-                          )),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
+                          ),
+                          Positioned(
+                              top: 35,
+                              left: 17,
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.white54,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: IconButton(
+                                    icon: Icon(Icons.arrow_back_ios),
+                                    iconSize: 22,
+                                    color: Colors.black,
+                                    splashColor: Colors.blue,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ),
+                              )),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.blue[200],
+                                    border:
+                                        Border.all(color: Colors.blue.shade200),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                padding: EdgeInsets.all(05),
+                                child: Text(
+                                  widget.topic,
+                                  style: TextStyle(
+                                    fontFamily: "Times",
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 25,
+                              ),
+                              Spacer(),
+                              Padding(
+                                padding: EdgeInsets.only(),
+                                child: IconButton(
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.heart,
+                                    color: Colors.red,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    upload();
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Container(
-                            decoration: BoxDecoration(
-                                color: Colors.blue[200],
-                                border: Border.all(color: Colors.blue[200]),
-                                borderRadius: BorderRadius.all(Radius.circular(5))),
-                            padding: EdgeInsets.all(05),
-                            child: Text(
-                              widget.topic,
-                              style: TextStyle(
-                                fontFamily: "Times",
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                              padding: EdgeInsets.symmetric(),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  FaIcon(
+                                    FontAwesomeIcons.solidClock,
+                                    color: Colors.grey,
+                                    size: 19,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(widget.time,
+                                      style: TextStyle(
+                                          fontFamily: "Times",
+                                          fontSize: 18,
+                                          color: Color(0xff8a8989))),
+                                ],
+                              )),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          SelectableText(
+                            widget.title,
+                            style: TextStyle(
+                              fontFamily: "League",
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            toolbarOptions: ToolbarOptions(
+                              copy: true,
+                              selectAll: true,
+                            ),
+                          ),
+                          Divider(
+                            thickness: 3,
+                            color: Colors.blue,
+                            endIndent: 200,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          SelectableText(
+                            widget.subtitle + '.',
+                            style: TextStyle(
+                                fontFamily: "Avenir",
+                                fontSize: 19,
+                                fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.justify,
+                            toolbarOptions: ToolbarOptions(
+                              copy: true,
+                              selectAll: true,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          GestureDetector(
+                            onTap: () => _showimg(context, widget.imageUrl),
+                            child: Container(
+                              height: 220,
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(05),
+                                border: Border.all(
+                                  color: Color(0xff707070),
+                                  width: 1,
+                                ),
+                                image: DecorationImage(
+                                    image: NetworkImage(widget.imageUrl),
+                                    fit: BoxFit.fill),
                               ),
                             ),
                           ),
                           SizedBox(
-                            width: 25,
+                            height: 5,
                           ),
-                          Spacer(),
+                          SelectableText(
+                            jsondata,
+                            style: TextStyle(
+                              fontFamily: "Bookman",
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.justify,
+                            toolbarOptions: ToolbarOptions(
+                              copy: true,
+                              selectAll: true,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "SOURCE:",
+                            style: TextStyle(
+                                fontFamily: "Bookman",
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
                           Padding(
-                            padding: EdgeInsets.only(),
-                            child: IconButton(
-                              icon: FaIcon(
-                                FontAwesomeIcons.heart,
-                                color: Colors.red,
-                                size: 20,
+                            padding: EdgeInsets.only(top: 05),
+                            child: TextButton(
+                              child: Text(
+                                widget.link,
+                                style: TextStyle(
+                                    fontFamily: "Times",
+                                    fontSize: 18,
+                                    color: Colors.blue),
+                                textAlign: TextAlign.justify,
+                              ),
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith(
+                                    (states) => Colors.blue.shade100),
                               ),
                               onPressed: () {
-                                upload();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Webview(
+                                              link: widget.link,
+                                            )));
                               },
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                          padding: EdgeInsets.symmetric(),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.solidClock,
-                                color: Colors.grey,
-                                size: 19,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(widget.time, style: TextStyle(fontFamily: "Times", fontSize: 18, color: Color(0xff8a8989))),
-                            ],
-                          )),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SelectableText(
-                        widget.title,
-                        style: TextStyle(
-                          fontFamily: "League",
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        toolbarOptions: ToolbarOptions(
-                          copy: true,
-                          selectAll: true,
-                        ),
-                      ),
-                      Divider(
-                        thickness: 3,
-                        color: Colors.blue,
-                        endIndent: 200,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      SelectableText(
-                        widget.subtitle + '.',
-                        style: TextStyle(fontFamily: "Avenir", fontSize: 19, fontWeight: FontWeight.w500),
-                        textAlign: TextAlign.justify,
-                        toolbarOptions: ToolbarOptions(
-                          copy: true,
-                          selectAll: true,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () => _showimg(context, widget.imageUrl),
-                        child: Container(
-                          height: 220,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(05),
-                            border: Border.all(
-                              color: Color(0xff707070),
-                              width: 1,
-                            ),
-                            image: DecorationImage(image: NetworkImage(widget.imageUrl), fit: BoxFit.fill),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SelectableText(
-                        jsondata,
-                        style: TextStyle(
-                          fontFamily: "Bookman",
-                          fontSize: 18,
-                        ),
-                        textAlign: TextAlign.justify,
-                        toolbarOptions: ToolbarOptions(
-                          copy: true,
-                          selectAll: true,
-                        ),
-                      ),
-                      Text(
-                        "SOURCE:",
-                        style: TextStyle(fontFamily: "Bookman", fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 05),
-                        child: TextButton(
-                          child: Text(
-                            widget.link,
-                            style: TextStyle(fontFamily: "Times", fontSize: 18, color: Colors.blue),
-                            textAlign: TextAlign.justify,
-                          ),
-                          style: ButtonStyle(
-                            overlayColor: MaterialStateColor.resolveWith((states) => Colors.blue[100]),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Webview(
-                                          link: widget.link,
-                                        )));
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                    ],
-                  ),
-                )
-              ]),
+                    )
+                  ]),
             ),
     );
   }
 
-  void _onImagDownloadButtonPressed(dynamic url) async {
-    try {
-      // Saved with this method.
-      var imageId = await ImageDownloader.downloadImage("$url");
-      if (imageId == null) {
-        return;
-      }
+  // void _onImagDownloadButtonPressed(dynamic url) async {
+  //   try {
+  //     // Saved with this method.
+  //     var imageId = NetworkToFileImage(url: "$url");
+  //     if (imageId == null) {
+  //       return;
+  //     }
 
-      // Below is a method of obtaining saved image information.
-      var fileName = await ImageDownloader.findName(imageId);
-      var path = await ImageDownloader.findPath(imageId);
-      var size = await ImageDownloader.findByteSize(imageId);
-      var mimeType = await ImageDownloader.findMimeType(imageId);
-    } on PlatformException catch (error) {
-      print(error);
+  //     // Below is a method of obtaining saved image information.
+  //   } on PlatformException catch (error) {
+  //     print(error);
+  //   }
+  //   Fluttertoast.showToast(
+  //       msg: 'Image downloaded',
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM);
+  // }
+
+  Future<void> _onImagDownloadButtonPressed(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      // Get the image name
+      final imageName = path.basename(url);
+      // Get the document directory path
+      final appDir = await path_Provider.getTemporaryDirectory();
+
+      // This is the saved image path
+      // You can use it to display the saved image later
+      final localPath = path.join(appDir.path, imageName);
+
+      // Downloading
+      final imageFile = File(localPath);
+      await imageFile.writeAsBytes(response.bodyBytes);
+
+      final params = SaveFileDialogParams(sourceFilePath: imageFile.path);
+      final finalPath = await FlutterFileDialog.saveFile(params: params);
+      if (finalPath != null)
+        Fluttertoast.showToast(
+            msg: 'Image downloaded',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM);
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
     }
-    Fluttertoast.showToast(msg: 'Image downloaded', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
   }
 
   void _showimg(BuildContext context, dynamic url) {
@@ -512,7 +605,8 @@ class _WebState extends State<Web> {
                       children: [
                         Spacer(),
                         Padding(
-                            padding: const EdgeInsets.only(bottom: 30, right: 15),
+                            padding:
+                                const EdgeInsets.only(bottom: 30, right: 15),
                             child: CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.white54,
@@ -530,7 +624,8 @@ class _WebState extends State<Web> {
                               ),
                             )),
                         Padding(
-                            padding: const EdgeInsets.only(bottom: 30, right: 15),
+                            padding:
+                                const EdgeInsets.only(bottom: 30, right: 15),
                             child: CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.white54,
@@ -558,7 +653,8 @@ class _WebState extends State<Web> {
                           color: Color(0xff707070),
                           width: 1,
                         ),
-                        image: DecorationImage(image: NetworkImage(url), fit: BoxFit.fill),
+                        image: DecorationImage(
+                            image: NetworkImage(url), fit: BoxFit.fill),
                       ),
                     ),
                   ],
@@ -570,79 +666,152 @@ class _WebState extends State<Web> {
 
 class Webview extends StatefulWidget {
   final link;
-  Webview({Key key, this.link}) : super(key: key);
+  Webview({Key? key, this.link}) : super(key: key);
 
   @override
   _WebviewState createState() => _WebviewState();
 }
 
 class _WebviewState extends State<Webview> {
-  final Completer<WebViewController> _controller = Completer<WebViewController>();
+  final GlobalKey webViewKey = GlobalKey();
+  late InAppWebViewController webViewController;
+  InAppWebViewGroupOptions options = InAppWebViewGroupOptions(
+    crossPlatform: InAppWebViewOptions(
+      useShouldOverrideUrlLoading: true,
+      mediaPlaybackRequiresUserGesture: false,
+      transparentBackground: true,
+      javaScriptEnabled: true,
+      javaScriptCanOpenWindowsAutomatically: true,
+      allowUniversalAccessFromFileURLs: true,
+      //  useOnDownloadStart: true,
+      supportZoom: !Platform.isIOS,
+      useOnDownloadStart: true,
+      incognito: false,
+      preferredContentMode: UserPreferredContentMode.RECOMMENDED,
+    ),
+    android: AndroidInAppWebViewOptions(
+      useHybridComposition: true,
+      domStorageEnabled: true,
+      databaseEnabled: true,
+      supportMultipleWindows: true,
+    ),
+    ios: IOSInAppWebViewOptions(
+      allowsInlineMediaPlayback: true,
+      isPagingEnabled: true,
+      enableViewportScale: true,
+      sharedCookiesEnabled: false,
+      automaticallyAdjustsScrollIndicatorInsets: true,
+      useOnNavigationResponse: false,
+    ),
+  );
+
+  late PullToRefreshController pullToRefreshController;
+  String url = "";
+  double progress = 0;
+
+  @override
+  void initState() {
+    pullToRefreshController = PullToRefreshController(
+      options: PullToRefreshOptions(
+        color: Colors.blue,
+      ),
+      onRefresh: () async {
+        if (Platform.isAndroid) {
+          webViewController.reload();
+        } else if (Platform.isIOS) {
+          webViewController.loadUrl(
+              urlRequest: URLRequest(url: await webViewController.getUrl()));
+        }
+      },
+    );
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => Navigator.pop(context),
+    return WillPopScope(
+      onWillPop: () async {
+        return true;
+      },
+      child: Scaffold(
+        body: SafeArea(
+            child: Column(children: <Widget>[
+          Expanded(
+            child: Stack(
+              children: [
+                InAppWebView(
+                  key: webViewKey,
+                  initialUrlRequest: URLRequest(url: Uri.tryParse(widget.link)),
+                  initialOptions: options,
+                  onReceivedServerTrustAuthRequest:
+                      (controller, challenge) async {
+                    return ServerTrustAuthResponse(
+                      action: ServerTrustAuthResponseAction.PROCEED,
+                    );
+                  },
+                  pullToRefreshController: pullToRefreshController,
+                  onWebViewCreated: (controller) async {
+                    webViewController = controller;
+                  },
+                  onLoadStart: (controller, url) {
+                    setState(() {
+                      this.url = url.toString();
+                    });
+                  },
+                  androidOnPermissionRequest:
+                      (controller, origin, resources) async {
+                    return PermissionRequestResponse(
+                        resources: resources,
+                        action: PermissionRequestResponseAction.GRANT);
+                  },
+                  shouldOverrideUrlLoading:
+                      (controller, navigationAction) async {
+                    var uri = navigationAction.request.url;
+                    if (![
+                      "http",
+                      "https",
+                      "file",
+                      "chrome",
+                      "data",
+                      "javascript",
+                      "about"
+                    ].contains(uri?.scheme)) {
+                      launchUrl(
+                        Uri.parse(url),
+                        mode: LaunchMode.externalApplication,
+                        webViewConfiguration:
+                            WebViewConfiguration(enableJavaScript: false),
+                      );
+
+                      return NavigationActionPolicy.CANCEL;
+                    }
+                    return NavigationActionPolicy.ALLOW;
+                  },
+                  onLoadStop: (controller, uri) async {},
+                  onLoadError: (controller, url, code, message) {},
+                  onProgressChanged: (controller, progress) {
+                    if (progress == 100) {}
+                    setState(() {
+                      this.progress = progress / 100;
+                    });
+                  },
+                  onUpdateVisitedHistory: (controller, url, androidIsReload) {
+                    setState(() {
+                      this.url = url.toString();
+                    });
+                  },
+                  onConsoleMessage: (controller, consoleMessage) {
+                    log(consoleMessage.message);
+                  },
                 ),
-              ),
-              SizedBox(
-                width: 80,
-              ),
-              Text(
-                'NEWS',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 28, color: Colors.black, fontWeight: FontWeight.w700),
-              ),
-              Text(
-                'FEED',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 28, color: Colors.blue, fontWeight: FontWeight.w700),
-              )
-            ],
+                progress < 1.0
+                    ? LinearProgressIndicator(value: progress, minHeight: 10)
+                    : Container(),
+              ],
+            ),
           ),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: false,
-        titleSpacing: 0,
-      ),
-      body: WebView(
-        initialUrl: widget.link,
-        javascriptMode: JavascriptMode.unrestricted,
-        onWebViewCreated: (WebViewController webViewController) {
-          _controller.complete(webViewController);
-        },
-        onProgress: (int progress) {
-          print("WebView is loading (progress : $progress%)");
-        },
-        javascriptChannels: <JavascriptChannel>{
-          // _toasterJavascriptChannel(context),
-        },
-        navigationDelegate: (NavigationRequest request) {
-          if (request.url.startsWith('https://www.youtube.com/')) {
-            print('blocking navigation to $request}');
-            return NavigationDecision.prevent;
-          }
-          print('allowing navigation to $request');
-          return NavigationDecision.navigate;
-        },
-        onPageStarted: (String url) {
-          print('Page started loading: $url');
-        },
-        onPageFinished: (String url) {
-          print('Page finished loading: $url');
-        },
-        gestureNavigationEnabled: true,
+        ])),
       ),
     );
   }
@@ -650,7 +819,17 @@ class _WebviewState extends State<Webview> {
 
 class Favouriteitem extends StatefulWidget {
   final link, imageUrl, title, subtitle, time, topic, story, id;
-  Favouriteitem({Key key, this.link, this.imageUrl, this.subtitle, this.time, this.title, this.topic, this.story, this.id}) : super(key: key);
+  Favouriteitem(
+      {Key? key,
+      this.link,
+      this.imageUrl,
+      this.subtitle,
+      this.time,
+      this.title,
+      this.topic,
+      this.story,
+      this.id})
+      : super(key: key);
 
   @override
   _FavouriteitemState createState() => _FavouriteitemState();
@@ -659,8 +838,8 @@ class Favouriteitem extends StatefulWidget {
 class _FavouriteitemState extends State<Favouriteitem> {
   var response;
   var title;
-  String email = FirebaseAuth.instance.currentUser.email;
-  List<Element> discription;
+  String? email = FirebaseAuth.instance.currentUser?.email;
+  List<Element>? discription;
 
   Future showdialog(BuildContext context, String message) async {
     return showDialog(
@@ -669,18 +848,29 @@ class _FavouriteitemState extends State<Favouriteitem> {
               title: new Text(message),
               actions: <Widget>[
                 new ElevatedButton(
+                    onPressed: () =>
+                        Navigator.of(context, rootNavigator: true).pop(),
+                    child: new Text("Cancel")),
+                new ElevatedButton(
                     onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
                       setState(() {});
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Home()),
                       );
-                      FirebaseFirestore.instance.collection(email).doc(widget.id).delete().then((_) {
-                        Fluttertoast.showToast(msg: 'Article removed from Favourites', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+                      FirebaseFirestore.instance
+                          .collection(email.toString())
+                          .doc(widget.id)
+                          .delete()
+                          .then((_) {
+                        Fluttertoast.showToast(
+                            msg: 'Article removed from Favourites',
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM);
                       });
                     },
                     child: new Text('Ok')),
-                new ElevatedButton(onPressed: () => Navigator.pop(context), child: new Text("Cancel"))
               ],
             ));
   }
@@ -711,7 +901,9 @@ class _FavouriteitemState extends State<Favouriteitem> {
                   width: MediaQuery.of(context).size.width,
                   child: Container(
                     decoration: BoxDecoration(
-                      image: DecorationImage(image: NetworkImage(widget.imageUrl), fit: BoxFit.fill),
+                      image: DecorationImage(
+                          image: NetworkImage(widget.imageUrl),
+                          fit: BoxFit.fill),
                     ),
                   ),
                 ),
@@ -746,7 +938,9 @@ class _FavouriteitemState extends State<Favouriteitem> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                          color: Colors.blue[200], border: Border.all(color: Colors.blue[200]), borderRadius: BorderRadius.all(Radius.circular(5))),
+                          color: Colors.blue[200],
+                          border: Border.all(color: Colors.blue.shade200),
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
                       padding: EdgeInsets.all(05),
                       child: Text(
                         widget.topic,
@@ -783,7 +977,8 @@ class _FavouriteitemState extends State<Favouriteitem> {
                           size: 19,
                         ),
                         onPressed: () {
-                          showdialog(context, 'Are you sure you want to remove this article');
+                          showdialog(context,
+                              'Are you sure you want to remove this article');
                         },
                       ),
                     )
@@ -805,7 +1000,11 @@ class _FavouriteitemState extends State<Favouriteitem> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text(widget.time, style: TextStyle(fontFamily: "Times", fontSize: 18, color: Color(0xff8a8989))),
+                        Text(widget.time,
+                            style: TextStyle(
+                                fontFamily: "Times",
+                                fontSize: 18,
+                                color: Color(0xff8a8989))),
                       ],
                     )),
                 SizedBox(
@@ -833,7 +1032,10 @@ class _FavouriteitemState extends State<Favouriteitem> {
                 ),
                 SelectableText(
                   widget.subtitle,
-                  style: TextStyle(fontFamily: "Avenir", fontSize: 19, fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontFamily: "Avenir",
+                      fontSize: 19,
+                      fontWeight: FontWeight.w500),
                   textAlign: TextAlign.justify,
                   toolbarOptions: ToolbarOptions(
                     copy: true,
@@ -854,7 +1056,9 @@ class _FavouriteitemState extends State<Favouriteitem> {
                         color: Color(0xff707070),
                         width: 1,
                       ),
-                      image: DecorationImage(image: NetworkImage(widget.imageUrl), fit: BoxFit.fill),
+                      image: DecorationImage(
+                          image: NetworkImage(widget.imageUrl),
+                          fit: BoxFit.fill),
                     ),
                   ),
                 ),
@@ -875,18 +1079,25 @@ class _FavouriteitemState extends State<Favouriteitem> {
                 ),
                 Text(
                   "SOURCE:",
-                  style: TextStyle(fontFamily: "Bookman", fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontFamily: "Bookman",
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 05),
                   child: TextButton(
                     child: Text(
                       widget.link,
-                      style: TextStyle(fontFamily: "Times", fontSize: 18, color: Colors.blue),
+                      style: TextStyle(
+                          fontFamily: "Times",
+                          fontSize: 18,
+                          color: Colors.blue),
                       textAlign: TextAlign.justify,
                     ),
                     style: ButtonStyle(
-                      overlayColor: MaterialStateColor.resolveWith((states) => Colors.blue[100]),
+                      overlayColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.blue.shade100),
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -912,20 +1123,23 @@ class _FavouriteitemState extends State<Favouriteitem> {
   void _onImagDownloadButtonPressed(dynamic url) async {
     try {
       // Saved with this method.
-      var imageId = await ImageDownloader.downloadImage("$url");
+      var imageId = NetworkToFileImage(url: "$url");
       if (imageId == null) {
         return;
       }
 
       // ignore: unused_local_variable
-      var fileName = await ImageDownloader.findName(imageId);
-      var path = await ImageDownloader.findPath(imageId);
-      var size = await ImageDownloader.findByteSize(imageId);
-      var mimeType = await ImageDownloader.findMimeType(imageId);
+      // var fileName = await ImageDownloader.findName(imageId);
+      // var path = await ImageDownloader.findPath(imageId);
+      // var size = await ImageDownloader.findByteSize(imageId);
+      // var mimeType = await ImageDownloader.findMimeType(imageId);
     } on PlatformException catch (error) {
       print(error);
     }
-    Fluttertoast.showToast(msg: 'Image downloaded', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM);
+    Fluttertoast.showToast(
+        msg: 'Image downloaded',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM);
   }
 
   void _showimg(BuildContext context, dynamic url) {
@@ -945,7 +1159,8 @@ class _FavouriteitemState extends State<Favouriteitem> {
                       children: [
                         Spacer(),
                         Padding(
-                            padding: const EdgeInsets.only(bottom: 30, right: 15),
+                            padding:
+                                const EdgeInsets.only(bottom: 30, right: 15),
                             child: CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.white54,
@@ -963,7 +1178,8 @@ class _FavouriteitemState extends State<Favouriteitem> {
                               ),
                             )),
                         Padding(
-                            padding: const EdgeInsets.only(bottom: 30, right: 15),
+                            padding:
+                                const EdgeInsets.only(bottom: 30, right: 15),
                             child: CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.white54,
@@ -991,7 +1207,8 @@ class _FavouriteitemState extends State<Favouriteitem> {
                           color: Color(0xff707070),
                           width: 1,
                         ),
-                        image: DecorationImage(image: NetworkImage(url), fit: BoxFit.fill),
+                        image: DecorationImage(
+                            image: NetworkImage(url), fit: BoxFit.fill),
                       ),
                     ),
                   ],

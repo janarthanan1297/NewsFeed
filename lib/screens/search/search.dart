@@ -1,12 +1,12 @@
+import 'package:News_Feed/model/categories_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:ten_news/model/categories_model.dart';
 import '../../reusable/custom_cards.dart';
 
 class Search extends StatefulWidget {
   final Map<String, List> newsData;
 
-  const Search({Key key, this.newsData}) : super(key: key);
+  const Search({Key? key, required this.newsData}) : super(key: key);
   @override
   _SearchState createState() => _SearchState();
 }
@@ -14,7 +14,7 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   Map<String, List> _newsData = Map<String, List>();
   TextEditingController _searchController = TextEditingController();
-  FocusNode searchNode;
+  FocusNode? searchNode;
   bool isCategory = false;
 
   @override
@@ -59,7 +59,12 @@ class _SearchState extends State<Search> {
                           builder: (context) => Category(
                                 title: categories[index].name,
                                 imageUrl: categories[index].imageUrl,
-                                value: categories[index].imageUrl.toString().split("/")[3].split(".")[0].replaceAll("_", "-"),
+                                value: categories[index]
+                                    .imageUrl
+                                    .toString()
+                                    .split("/")[3]
+                                    .split(".")[0]
+                                    .replaceAll("_", "-"),
                                 index: index,
                                 newsData: widget.newsData,
                               )));
@@ -99,7 +104,12 @@ class _SearchState extends State<Search> {
                           builder: (context) => Category(
                                 title: categories[index + 4].name,
                                 imageUrl: categories[index + 4].imageUrl,
-                                value: categories[index + 4].imageUrl.toString().split("/")[3].split(".")[0].replaceAll("_", "-"),
+                                value: categories[index + 4]
+                                    .imageUrl
+                                    .toString()
+                                    .split("/")[3]
+                                    .split(".")[0]
+                                    .replaceAll("_", "-"),
                                 index: index + 4,
                                 newsData: widget.newsData,
                               )));
@@ -191,7 +201,14 @@ class _SearchState extends State<Search> {
 class Category extends StatefulWidget {
   final imageUrl, title, index, value;
   final Map<String, List> newsData;
-  Category({Key key, this.imageUrl, this.title, this.index, this.value, this.newsData}) : super(key: key);
+  Category(
+      {Key? key,
+      this.imageUrl,
+      this.title,
+      this.index,
+      this.value,
+      required this.newsData})
+      : super(key: key);
 
   @override
   _CategoryState createState() => _CategoryState();
@@ -203,9 +220,9 @@ class _CategoryState extends State<Category> {
   var key;
   var item;
   Map<String, List> _newsData = Map<String, List>();
-  GlobalKey<RefreshIndicatorState> refreshKey;
+  GlobalKey<RefreshIndicatorState>? refreshKey;
 
-  List<Element> discription;
+  List<Element>? discription;
 
   @override
   void initState() {
@@ -239,7 +256,8 @@ class _CategoryState extends State<Category> {
           padding: EdgeInsets.symmetric(
             horizontal: 0,
           ),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               height: 300,
               child: Stack(
@@ -253,7 +271,8 @@ class _CategoryState extends State<Category> {
                         borderRadius: BorderRadius.circular(0),
                         image: DecorationImage(
                             image: AssetImage(widget.imageUrl),
-                            colorFilter: ColorFilter.mode(Colors.black38, BlendMode.overlay),
+                            colorFilter: ColorFilter.mode(
+                                Colors.black38, BlendMode.overlay),
                             fit: BoxFit.cover,
                             alignment: Alignment.center),
                       ),
@@ -284,7 +303,9 @@ class _CategoryState extends State<Category> {
                       child: Container(
                         padding: EdgeInsets.all(05),
                         decoration: BoxDecoration(
-                            color: Colors.black45, border: Border.all(color: Colors.black45), borderRadius: BorderRadius.all(Radius.circular(5))),
+                            color: Colors.black45,
+                            border: Border.all(color: Colors.black45),
+                            borderRadius: BorderRadius.all(Radius.circular(5))),
                         child: Text(widget.title,
                             style: TextStyle(
                               color: Colors.white,
@@ -308,16 +329,20 @@ class _CategoryState extends State<Category> {
                     : ListView.builder(
                         padding: EdgeInsets.symmetric(),
                         itemBuilder: (context, i) {
-                          String time = _newsData[key][i]['pubDate']['__cdata'];
+                          String time =
+                              _newsData[key]?[i]['pubDate']['__cdata'];
                           /* DateTime timeIST = DateTime.parse(time);
                           timeIST = timeIST.add(Duration(hours: 5)).add(Duration(minutes: 30));
  */
                           return HomePageCard(
-                            title: _newsData[key][i]['title']['__cdata'].replaceAll(r"\'", ''),
-                            subtitle: _newsData[key][i]['description']['__cdata'],
+                            title: _newsData[key]?[i]['title']['__cdata']
+                                .replaceAll(r"\'", ''),
+                            subtitle: _newsData[key]?[i]['description']
+                                ['__cdata'],
                             time: time.substring(5, 22),
-                            imageUrl: _newsData[key][i]['media\$content']['url'],
-                            link: _newsData[key][i]['link']['__cdata'],
+                            imageUrl: _newsData[key]?[i]['media\$content']
+                                ['url'],
+                            link: _newsData[key]?[i]['link']['__cdata'],
                             topic: widget.title,
                           );
                         },

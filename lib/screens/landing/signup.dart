@@ -1,7 +1,6 @@
+import 'package:News_Feed/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../../home.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -44,11 +43,21 @@ class _SignUpScreenState extends State<SignUp> {
             children: [
               Text(
                 'NEWS',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 36, color: Colors.black, fontWeight: FontWeight.w700, letterSpacing: 2),
+                style: TextStyle(
+                    fontFamily: "Stencil",
+                    fontSize: 36,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2),
               ),
               Text(
                 'FEED',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 36, color: Colors.white, fontWeight: FontWeight.w700, letterSpacing: 2),
+                style: TextStyle(
+                    fontFamily: "Stencil",
+                    fontSize: 36,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2),
               )
             ],
           ),
@@ -57,197 +66,232 @@ class _SignUpScreenState extends State<SignUp> {
           ),
           Container(
               //height: 50,
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: TextFormField(
-                      focusNode: myFocusNode1,
-                      controller: nameController,
-                      decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          labelStyle:
-                              TextStyle(fontSize: myFocusNode1.hasFocus ? 24 : 18.0, color: myFocusNode1.hasFocus ? Colors.black : Colors.grey),
-                          labelText: 'Enter Username',
-                          filled: true,
-                          // isDense: true,
-                          fillColor: Colors.grey[200],
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(
-                              icon: Icon(
-                                Icons.person,
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: TextFormField(
+                          focusNode: myFocusNode1,
+                          controller: nameController,
+                          decoration: InputDecoration(
+                              alignLabelWithHint: true,
+                              labelStyle: TextStyle(
+                                  fontSize: myFocusNode1.hasFocus ? 24 : 18.0,
+                                  color: myFocusNode1.hasFocus
+                                      ? Colors.black
+                                      : Colors.grey),
+                              labelText: 'Enter Username',
+                              filled: true,
+                              // isDense: true,
+                              fillColor: Colors.grey[200],
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.person,
+                                  ),
+                                  onPressed: null),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
                               ),
-                              onPressed: null),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
-                              color: Colors.grey[200],
-                            ),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.black,
-                              ))),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Username';
-                        }
-                        return null;
-                      },
-                    ))
-              ])),
+                              focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.black,
+                                  ))),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Enter Username';
+                            }
+                            return null;
+                          },
+                        ))
+                  ])),
           SizedBox(
             height: 16,
           ),
           Container(
               //height: 50,
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: TextFormField(
-                      focusNode: myFocusNode2,
-                      controller: emailController,
-                      decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          labelStyle:
-                              TextStyle(fontSize: myFocusNode2.hasFocus ? 24 : 18.0, color: myFocusNode2.hasFocus ? Colors.black : Colors.grey),
-                          labelText: 'Enter email-id',
-                          filled: true,
-                          // isDense: true,
-                          fillColor: Colors.grey[200],
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(
-                              icon: Icon(
-                                Icons.email,
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: TextFormField(
+                          focusNode: myFocusNode2,
+                          controller: emailController,
+                          decoration: InputDecoration(
+                              alignLabelWithHint: true,
+                              labelStyle: TextStyle(
+                                  fontSize: myFocusNode2.hasFocus ? 24 : 18.0,
+                                  color: myFocusNode2.hasFocus
+                                      ? Colors.black
+                                      : Colors.grey),
+                              labelText: 'Enter email-id',
+                              filled: true,
+                              // isDense: true,
+                              fillColor: Colors.grey[200],
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.email,
+                                  ),
+                                  onPressed: null),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
                               ),
-                              onPressed: null),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
-                              color: Colors.grey[200],
-                            ),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.black,
-                              ))),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Email Address';
-                        } else if (!value.contains('@')) {
-                          return 'Please enter a valid email address!';
-                        }
-                        return null;
-                      },
-                    ))
-              ])),
+                              focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.black,
+                                  ))),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Enter Email Address';
+                            } else if (!value.contains('@')) {
+                              return 'Please enter a valid email address!';
+                            }
+                            return null;
+                          },
+                        ))
+                  ])),
           SizedBox(
             height: 16,
           ),
           Container(
               //height: 50,
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: TextFormField(
-                      focusNode: myFocusNode3,
-                      controller: passwordController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                          filled: true,
-                          //isDense: true,
-                          fillColor: Colors.grey[200],
-                          labelText: 'Password',
-                          alignLabelWithHint: true,
-                          labelStyle:
-                              TextStyle(fontSize: myFocusNode3.hasFocus ? 24 : 18.0, color: myFocusNode3.hasFocus ? Colors.black : Colors.grey),
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(icon: Icon(Icons.lock), onPressed: null),
-                          suffixIcon: IconButton(
-                            icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
-                              color: Colors.grey[200],
-                            ),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.black,
-                              ))),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Password';
-                        } else if (value.length < 6) {
-                          return 'Password must be at least 6 characters!';
-                        }
-                        return null;
-                      },
-                    ))
-              ])),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: TextFormField(
+                          focusNode: myFocusNode3,
+                          controller: passwordController,
+                          obscureText: _obscureText,
+                          decoration: InputDecoration(
+                              filled: true,
+                              //isDense: true,
+                              fillColor: Colors.grey[200],
+                              labelText: 'Password',
+                              alignLabelWithHint: true,
+                              labelStyle: TextStyle(
+                                  fontSize: myFocusNode3.hasFocus ? 24 : 18.0,
+                                  color: myFocusNode3.hasFocus
+                                      ? Colors.black
+                                      : Colors.grey),
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(
+                                  icon: Icon(Icons.lock), onPressed: null),
+                              suffixIcon: IconButton(
+                                icon: Icon(_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
+                              ),
+                              focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.black,
+                                  ))),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Enter Password';
+                            } else if (value.length < 6) {
+                              return 'Password must be at least 6 characters!';
+                            }
+                            return null;
+                          },
+                        ))
+                  ])),
           SizedBox(
             height: 16,
           ),
           Container(
               //height: 50,
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: TextFormField(
-                      focusNode: myFocusNode4,
-                      controller: retypePasswordController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                          filled: true,
-                          //isDense: true,
-                          fillColor: Colors.grey[200],
-                          labelText: 'Re-Enter Password',
-                          alignLabelWithHint: true,
-                          labelStyle:
-                              TextStyle(fontSize: myFocusNode4.hasFocus ? 24 : 18.0, color: myFocusNode4.hasFocus ? Colors.black : Colors.grey),
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(icon: Icon(Icons.lock), onPressed: null),
-                          suffixIcon: IconButton(
-                            icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
-                              color: Colors.grey[200],
-                            ),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.black,
-                              ))),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Re-enter Password';
-                        } else if (value.trim() != passwordController.text.trim()) {
-                          return 'Passwords didn\'t match. Please re-enter password.';
-                        }
-                        return null;
-                      },
-                    ))
-              ])),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: TextFormField(
+                          focusNode: myFocusNode4,
+                          controller: retypePasswordController,
+                          obscureText: _obscureText,
+                          decoration: InputDecoration(
+                              filled: true,
+                              //isDense: true,
+                              fillColor: Colors.grey[200],
+                              labelText: 'Re-Enter Password',
+                              alignLabelWithHint: true,
+                              labelStyle: TextStyle(
+                                  fontSize: myFocusNode4.hasFocus ? 24 : 18.0,
+                                  color: myFocusNode4.hasFocus
+                                      ? Colors.black
+                                      : Colors.grey),
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(
+                                  icon: Icon(Icons.lock), onPressed: null),
+                              suffixIcon: IconButton(
+                                icon: Icon(_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
+                              ),
+                              focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.black,
+                                  ))),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Re-enter Password';
+                            } else if (value.trim() !=
+                                passwordController.text.trim()) {
+                              return 'Passwords didn\'t match. Please re-enter password.';
+                            }
+                            return null;
+                          },
+                        ))
+                  ])),
           SizedBox(
             height: 24,
           ),
@@ -257,14 +301,17 @@ class _SignUpScreenState extends State<SignUp> {
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.60,
                 height: 50,
-                decoration: BoxDecoration(color: Colors.black, borderRadius: BorderRadius.circular(15), boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 5,
-                    spreadRadius: 01,
-                    offset: const Offset(0.0, 5.0),
-                  )
-                ]),
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 5,
+                        spreadRadius: 01,
+                        offset: const Offset(0.0, 5.0),
+                      )
+                    ]),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.black,
@@ -273,7 +320,7 @@ class _SignUpScreenState extends State<SignUp> {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       setState(() {
                         isLoading = true;
                       });
@@ -304,15 +351,16 @@ class _SignUpScreenState extends State<SignUp> {
   void registerToEmail() async {
     CircularProgressIndicator();
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
-      User user = userCredential.user;
+      User? user = userCredential.user;
       //FirebaseAuth.instance.currentUser;
       if (user != null) {
         // added "await" Nov 1,2020. new method to update user profile
-        user.updateProfile(displayName: nameController.text.trim());
+        user.updateDisplayName(nameController.text.trim());
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Home()),
@@ -326,7 +374,7 @@ class _SignUpScreenState extends State<SignUp> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Error"),
-              content: Text(err.message),
+              content: Text(err.toString()),
               actions: [
                 ElevatedButton(
                   child: Text("Ok"),

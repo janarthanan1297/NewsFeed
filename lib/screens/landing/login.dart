@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ten_news/home.dart';
+import 'package:News_Feed/home.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:News_Feed/screens/landing/forgotpassword.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ten_news/screens/landing/forgotpassword.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -45,11 +45,21 @@ class _LoginState extends State<Login> {
             children: [
               Text(
                 'NEWS',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 36, color: Colors.black, fontWeight: FontWeight.w700, letterSpacing: 2),
+                style: TextStyle(
+                    fontFamily: "Stencil",
+                    fontSize: 36,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2),
               ),
               Text(
                 'FEED',
-                style: TextStyle(fontFamily: "Stencil", fontSize: 36, color: Colors.blue, fontWeight: FontWeight.w700, letterSpacing: 2),
+                style: TextStyle(
+                    fontFamily: "Stencil",
+                    fontSize: 36,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 2),
               )
             ],
           ),
@@ -69,106 +79,125 @@ class _LoginState extends State<Login> {
           ),
           Container(
               //height: 50,
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: TextFormField(
-                      focusNode: myFocusNode,
-                      controller: emailController,
-                      decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          labelStyle: TextStyle(fontSize: myFocusNode.hasFocus ? 24 : 18.0, color: myFocusNode.hasFocus ? Colors.blue : Colors.grey),
-                          labelText: 'Enter email-id',
-                          filled: true,
-                          // isDense: true,
-                          fillColor: Colors.grey[200],
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(
-                              icon: Icon(
-                                Icons.email,
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: TextFormField(
+                          focusNode: myFocusNode,
+                          controller: emailController,
+                          decoration: InputDecoration(
+                              alignLabelWithHint: true,
+                              labelStyle: TextStyle(
+                                  fontSize: myFocusNode.hasFocus ? 24 : 18.0,
+                                  color: myFocusNode.hasFocus
+                                      ? Colors.blue
+                                      : Colors.grey),
+                              labelText: 'Enter email-id',
+                              filled: true,
+                              // isDense: true,
+                              fillColor: Colors.grey[200],
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(
+                                  icon: Icon(
+                                    Icons.email,
+                                  ),
+                                  onPressed: null),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
                               ),
-                              onPressed: null),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
-                              color: Colors.grey[200],
-                            ),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.blue,
-                              ))),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Email Address';
-                        } else if (!value.contains('@')) {
-                          return 'Please enter a valid email address!';
-                        }
-                        return null;
-                      },
-                    ))
-              ])),
+                              focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.blue,
+                                  ))),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Enter Email Address';
+                            } else if (!value.contains('@')) {
+                              return 'Please enter a valid email address!';
+                            }
+                            return null;
+                          },
+                        ))
+                  ])),
           SizedBox(
             height: 16,
           ),
           Container(
               //height: 50,
-              decoration: BoxDecoration(color: Colors.grey[200], borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Padding(
-                    padding: EdgeInsets.only(left: 0, right: 0),
-                    child: TextFormField(
-                      focusNode: myFocusNode1,
-                      controller: passwordController,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                          filled: true,
-                          //isDense: true,
-                          fillColor: Colors.grey[200],
-                          labelText: 'Password',
-                          alignLabelWithHint: true,
-                          labelStyle:
-                              TextStyle(fontSize: myFocusNode1.hasFocus ? 24 : 18.0, color: myFocusNode1.hasFocus ? Colors.blue : Colors.grey),
-                          border: InputBorder.none,
-                          prefixIcon: IconButton(icon: Icon(Icons.lock), onPressed: null),
-                          suffixIcon: IconButton(
-                            icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-                            onPressed: () {
-                              setState(() {
-                                _obscureText = !_obscureText;
-                              });
-                            },
-                          ),
-                          enabledBorder: new OutlineInputBorder(
-                            borderRadius: new BorderRadius.circular(15.0),
-                            borderSide: new BorderSide(
-                              color: Colors.grey[200],
-                            ),
-                          ),
-                          focusedBorder: new OutlineInputBorder(
-                              borderRadius: new BorderRadius.circular(15.0),
-                              borderSide: new BorderSide(
-                                color: Colors.blue,
-                              ))),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Enter Password';
-                        } else if (value.length < 6) {
-                          return 'Password must be at least 6 characters!';
-                        }
-                        return null;
-                      },
-                    ))
-              ])),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.only(left: 0, right: 0),
+                        child: TextFormField(
+                          focusNode: myFocusNode1,
+                          controller: passwordController,
+                          obscureText: _obscureText,
+                          decoration: InputDecoration(
+                              filled: true,
+                              //isDense: true,
+                              fillColor: Colors.grey[200],
+                              labelText: 'Password',
+                              alignLabelWithHint: true,
+                              labelStyle: TextStyle(
+                                  fontSize: myFocusNode1.hasFocus ? 24 : 18.0,
+                                  color: myFocusNode1.hasFocus
+                                      ? Colors.blue
+                                      : Colors.grey),
+                              border: InputBorder.none,
+                              prefixIcon: IconButton(
+                                  icon: Icon(Icons.lock), onPressed: null),
+                              suffixIcon: IconButton(
+                                icon: Icon(_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscureText = !_obscureText;
+                                  });
+                                },
+                              ),
+                              enabledBorder: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(15.0),
+                                borderSide: new BorderSide(
+                                  color: Colors.grey.shade200,
+                                ),
+                              ),
+                              focusedBorder: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(
+                                    color: Colors.blue,
+                                  ))),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Enter Password';
+                            } else if (value.length < 6) {
+                              return 'Password must be at least 6 characters!';
+                            }
+                            return null;
+                          },
+                        ))
+                  ])),
           SizedBox(
             height: 16,
           ),
           Center(
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPassword()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ForgotPassword()));
               },
               child: Text(
                 "FORGOT PASSWORD?",
@@ -190,14 +219,17 @@ class _LoginState extends State<Login> {
             child: Container(
                 width: MediaQuery.of(context).size.width * 0.60,
                 height: 50,
-                decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(15), boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 5,
-                    spreadRadius: 01,
-                    offset: const Offset(0.0, 5.0),
-                  )
-                ]),
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 5,
+                        spreadRadius: 01,
+                        offset: const Offset(0.0, 5.0),
+                      )
+                    ]),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
@@ -206,7 +238,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState.validate()) {
+                    if (_formKey.currentState!.validate()) {
                       setState(() {
                         isLoading = true;
                       });
@@ -255,7 +287,8 @@ class _LoginState extends State<Login> {
                         text: "Continue with Google",
                         onPressed: () async {
                           // ignore: unused_local_variable
-                          UserCredential userCredential = await signInWithGoogle();
+                          UserCredential userCredential =
+                              await signInWithGoogle();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(builder: (context) => Home()),
@@ -273,8 +306,10 @@ class _LoginState extends State<Login> {
   void logInToEmail() async {
     try {
       // ignore: unused_local_variable
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text.trim(), password: passwordController.text.trim());
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailController.text.trim(),
+              password: passwordController.text.trim());
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),
@@ -289,7 +324,7 @@ class _LoginState extends State<Login> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Error"),
-              content: Text(err.message),
+              content: Text(err.toString()),
               actions: [
                 ElevatedButton(
                   child: Text("Ok"),
@@ -307,15 +342,16 @@ class _LoginState extends State<Login> {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
-    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
     );
 
     // Once signed in, return the UserCredential

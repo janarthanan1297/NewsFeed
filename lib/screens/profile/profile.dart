@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ten_news/screens/landing/forgotpassword.dart';
+import 'package:News_Feed/screens/landing/forgotpassword.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -11,9 +11,9 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   bool showPassword = false;
-  String username = FirebaseAuth.instance.currentUser.displayName;
-  String profile = FirebaseAuth.instance.currentUser.photoURL;
-  String email = FirebaseAuth.instance.currentUser.email;
+  String? username = FirebaseAuth.instance.currentUser?.displayName;
+  String? profile = FirebaseAuth.instance.currentUser?.photoURL;
+  String? email = FirebaseAuth.instance.currentUser?.email;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
             children: [
               Text(
                 "Profile",
-                style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 28, fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                    color: Color.fromRGBO(59, 57, 60, 1),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 15,
@@ -53,11 +56,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       width: 130,
                       height: 130,
                       decoration: BoxDecoration(
-                          border: Border.all(width: 4, color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [BoxShadow(spreadRadius: 2, blurRadius: 10, color: Colors.black.withOpacity(0.1), offset: Offset(0, 10))],
+                          border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              fit: BoxFit.cover, image: NetworkImage(profile == null ? "https://i.stack.imgur.com/l60Hf.png" : profile))),
+                              fit: BoxFit.cover,
+                              image: NetworkImage(profile == null
+                                  ? "https://i.stack.imgur.com/l60Hf.png"
+                                  : profile.toString()))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -84,8 +98,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", username, false),
-              buildTextField("E-mail", email, false),
+              buildTextField("Full Name", username ?? '', false),
+              buildTextField("E-mail", email ?? '', false),
               buildTextField("Password", "********", true),
               ListTile(
                 contentPadding: EdgeInsets.only(left: 0, right: 0, bottom: 0),
@@ -125,7 +139,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: TextField(
@@ -153,7 +168,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintText: placeholder,
-          hintStyle: TextStyle(fontFamily: "Times", fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black),
+          hintStyle: TextStyle(
+              fontFamily: "Times",
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Colors.black),
         ),
       ),
     );
@@ -167,9 +186,9 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   bool showPassword = false;
-  String username = FirebaseAuth.instance.currentUser.displayName;
-  String profile = FirebaseAuth.instance.currentUser.photoURL;
-  String email = FirebaseAuth.instance.currentUser.email;
+  String? username = FirebaseAuth.instance.currentUser?.displayName;
+  String? profile = FirebaseAuth.instance.currentUser?.photoURL;
+  String? email = FirebaseAuth.instance.currentUser?.email;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +203,10 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Text(
                 "Profile",
-                style: GoogleFonts.montserrat(color: Color.fromRGBO(59, 57, 60, 1), fontSize: 28, fontWeight: FontWeight.bold),
+                style: GoogleFonts.montserrat(
+                    color: Color.fromRGBO(59, 57, 60, 1),
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 15,
@@ -196,11 +218,22 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: 130,
                       height: 130,
                       decoration: BoxDecoration(
-                          border: Border.all(width: 4, color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [BoxShadow(spreadRadius: 2, blurRadius: 10, color: Colors.black.withOpacity(0.1), offset: Offset(0, 10))],
+                          border: Border.all(
+                              width: 4,
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              fit: BoxFit.cover, image: NetworkImage(profile == null ? "https://i.stack.imgur.com/l60Hf.png" : profile))),
+                              fit: BoxFit.cover,
+                              image: NetworkImage(profile == null
+                                  ? "https://i.stack.imgur.com/l60Hf.png"
+                                  : profile.toString()))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -227,8 +260,8 @@ class _ProfilePageState extends State<ProfilePage> {
               SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", username, false),
-              buildTextField("E-mail", email, false),
+              buildTextField("Full Name", username ?? '', false),
+              buildTextField("E-mail", email ?? '', false),
               buildTextField("Password", "********", true),
               ListTile(
                 contentPadding: EdgeInsets.only(left: 0, right: 0, bottom: 0),
@@ -268,7 +301,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildTextField(String labelText, String placeholder, bool isPasswordTextField) {
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30.0),
       child: TextField(
@@ -296,7 +330,11 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           floatingLabelBehavior: FloatingLabelBehavior.always,
           hintText: placeholder,
-          hintStyle: TextStyle(fontFamily: "Times", fontSize: 20, fontWeight: FontWeight.w700, color: Colors.black),
+          hintStyle: TextStyle(
+              fontFamily: "Times",
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Colors.black),
         ),
       ),
     );
