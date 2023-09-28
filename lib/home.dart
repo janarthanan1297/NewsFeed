@@ -22,7 +22,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentIndex = 0;
-  String? profile = FirebaseAuth.instance.currentUser?.photoURL;
+  ValueNotifier<String> profile =
+      ValueNotifier<String>(FirebaseAuth.instance.currentUser?.photoURL ?? '');
 
   void changePage(int index) {
     setState(() {
@@ -135,33 +136,42 @@ class _HomeState extends State<Home> {
               Spacer(),
               Container(
                 height: 170,
+                width: 170,
                 padding: EdgeInsets.only(top: 20),
                 child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        width: 4,
-                        color: Theme.of(context).scaffoldBackgroundColor),
-                    boxShadow: [
-                      BoxShadow(
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 10))
-                    ],
-                    image: DecorationImage(
-                        fit: BoxFit.contain,
-                        image: NetworkImage(profile == null
-                            ? "https://i.stack.imgur.com/l60Hf.png"
-                            : profile.toString())),
-                  ),
-                  // child: CircleAvatar(
-                  //   backgroundImage: NetworkImage(profile == null
-                  //       ? "https://i.stack.imgur.com/l60Hf.png"
-                  //       : profile.toString()),
-                  //   radius: 100.0,
-                  // ),
-                ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                          width: 4,
+                          color: Theme.of(context).scaffoldBackgroundColor),
+                      boxShadow: [
+                        BoxShadow(
+                            spreadRadius: 2,
+                            blurRadius: 10,
+                            color: Colors.black.withOpacity(0.1),
+                            offset: Offset(0, 10))
+                      ],
+                      // image: DecorationImage(
+                      //     fit: BoxFit.contain,
+                      //     image: NetworkImage(profile == null
+                      //         ? "https://i.stack.imgur.com/l60Hf.png"
+                      //         : profile.toString())),
+                    ),
+                    // child: CircleAvatar(
+                    //   backgroundImage: NetworkImage(profile == null
+                    //       ? "https://i.stack.imgur.com/l60Hf.png"
+                    //       : profile.toString()),
+                    //   radius: 100.0,
+                    // ),
+                    child: ValueListenableBuilder(
+                        valueListenable: profile,
+                        builder: (context, String profile, child) {
+                          return CircleAvatar(
+                            backgroundImage: NetworkImage(profile == null
+                                ? "https://i.stack.imgur.com/l60Hf.png"
+                                : profile),
+                          );
+                        })),
               ),
               SizedBox(
                 height: 20,
@@ -174,13 +184,13 @@ class _HomeState extends State<Home> {
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    currentIndex = 1;
-                  });
-                  Navigator.of(context).pop();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SettingsTwoPage()));
                 },
                 child: Text(
-                  'Categories',
+                  'Settings',
                   style: TextStyle(
                     fontFamily: 'Avenir',
                     fontSize: 24,
@@ -194,13 +204,13 @@ class _HomeState extends State<Home> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingsTwoPage()));
+                  setState(() {
+                    currentIndex = 1;
+                  });
+                  Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Settings',
+                  'Categories',
                   style: TextStyle(
                     fontFamily: 'Avenir',
                     fontSize: 24,

@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  file_picker:
+    dependency: "direct main"
+    description:
+      name: file_picker
+      sha256: "9d6e95ec73abbd31ec54d0e0df8a961017e165aba1395e462e5b31ea0c165daf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.1"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -201,6 +209,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.8.0"
+  firebase_storage:
+    dependency: "direct main"
+    description:
+      name: firebase_storage
+      sha256: "0b6423dc6acb8185121a974843ab7678127b93fe68f22683f3852b3634e19c8e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "11.2.7"
+  firebase_storage_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_storage_platform_interface
+      sha256: "8ad840f019b4d3e25dcf9fa64563dc9eff981f9ca9207aff7b717038e69ec868"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.6"
+  firebase_storage_web:
+    dependency: transitive
+    description:
+      name: firebase_storage_web
+      sha256: "37b44ea1f54ad993a1b0aea99d7083b251669f91af799e50cc3e84a969642f8f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.6.7"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -222,6 +254,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.7.2+3"
+  flutter_plugin_android_lifecycle:
+    dependency: transitive
+    description:
+      name: flutter_plugin_android_lifecycle
+      sha256: f185ac890306b5779ecbd611f52502d8d4d63d27703ef73161ca0407e815f02c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.16"
   flutter_signin_button:
     dependency: "direct main"
     description:

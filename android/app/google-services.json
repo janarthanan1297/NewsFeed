@@ -1,57 +1,42 @@
 {
   "project_info": {
-    "project_number": "842329593125",
-    "project_id": "newsfeed-ae077",
-    "storage_bucket": "newsfeed-ae077.appspot.com"
+    "project_number": "526854315913",
+    "project_id": "newsfeed-1297",
+    "storage_bucket": "newsfeed-1297.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:842329593125:android:95f68e8ef27aad5b2536cc",
+        "mobilesdk_app_id": "1:526854315913:android:cde16ffb436a6a3b3b4b58",
         "android_client_info": {
-          "package_name": "com.example.newsfeed"
+          "package_name": "com.newsfeed.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "842329593125-8a7ifh0rr62vakks03hdvng1cfsepqb5.apps.googleusercontent.com",
+          "client_id": "526854315913-kq9jk0pi4mlatds1f9vhtbvvu30dinf3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.newsfeed",
+            "package_name": "com.newsfeed.app",
             "certificate_hash": "6d3a97e2d59c4da18aa2cd2955473ef0eece137b"
           }
         },
         {
-          "client_id": "842329593125-8gikoov4qmt9tpoqdufeg4hpv39igesc.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.newsfeed",
-            "certificate_hash": "e718575a4f3b0708f903ba7e895d6cdc47496f59"
-          }
-        },
-        {
-          "client_id": "842329593125-m8j9hnprjc07ndrvjadi7ndhgg88dd01.apps.googleusercontent.com",
+          "client_id": "526854315913-ho4citlda6psgg77p217s4q5outjl8ju.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAxab1T9sxzAwsExKmHBIzqew0WN4P2gtA"
+          "current_key": "AIzaSyAbXwgYh3aJlVOhF1v5IAdX0kayDl9yjBI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "842329593125-m8j9hnprjc07ndrvjadi7ndhgg88dd01.apps.googleusercontent.com",
+              "client_id": "526854315913-ho4citlda6psgg77p217s4q5outjl8ju.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "842329593125-3llqfcpdu5a7djrqea5v89behvsd2dcg.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.newsfeed"
-              }
             }
           ]
         }

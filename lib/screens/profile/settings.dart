@@ -16,7 +16,8 @@ class _SettingState extends State<SettingsTwoPage> {
   bool value1 = false;
   bool? value2;
   String? username = FirebaseAuth.instance.currentUser?.displayName;
-  String? profile = FirebaseAuth.instance.currentUser?.photoURL;
+  ValueNotifier<String> profile =
+      ValueNotifier<String>(FirebaseAuth.instance.currentUser?.photoURL ?? '');
   String? email = FirebaseAuth.instance.currentUser?.email;
   final TextStyle whiteText = TextStyle(
     color: Colors.white,
@@ -58,30 +59,38 @@ class _SettingState extends State<SettingsTwoPage> {
                 Row(
                   children: <Widget>[
                     Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        //color: primary,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              spreadRadius: 2,
-                              blurRadius: 10,
-                              color: Colors.black.withOpacity(0.1),
-                              offset: Offset(0, 10))
-                        ],
-                        image: DecorationImage(
-                          image: NetworkImage(profile == null
-                              ? "https://i.stack.imgur.com/l60Hf.png"
-                              : profile.toString()),
-                          fit: BoxFit.cover,
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          //color: primary,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          // image: DecorationImage(
+                          //   image: NetworkImage(profile == null
+                          //       ? "https://i.stack.imgur.com/l60Hf.png"
+                          //       : profile.toString()),
+                          //   fit: BoxFit.cover,
+                          // ),
+                          border: Border.all(
+                            color: Colors.blue,
+                            width: 2.0,
+                          ),
                         ),
-                        border: Border.all(
-                          color: Colors.blue,
-                          width: 2.0,
-                        ),
-                      ),
-                    ),
+                        child: ValueListenableBuilder(
+                            valueListenable: profile,
+                            builder: (context, String profile, child) {
+                              return CircleAvatar(
+                                backgroundImage: NetworkImage(profile == null
+                                    ? "https://i.stack.imgur.com/l60Hf.png"
+                                    : profile),
+                              );
+                            })),
                     const SizedBox(width: 10.0),
                     Expanded(
                       child: Column(
@@ -106,35 +115,35 @@ class _SettingState extends State<SettingsTwoPage> {
                   ],
                 ),
                 const SizedBox(height: 40.0),
-                // ListTile(
-                //   contentPadding:
-                //       EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 10),
-                //   title: Text(
-                //     "Profile Settings",
-                //     style: GoogleFonts.montserrat(
-                //         color: Color.fromRGBO(59, 57, 60, 1),
-                //         fontSize: 18,
-                //         fontWeight: FontWeight.w600),
-                //   ),
-                //   subtitle: Text(
-                //     username ?? '',
-                //     style: greyTExt,
-                //   ),
-                //   leading: CircleAvatar(
-                //       backgroundColor: Colors.orange,
-                //       child: IconButton(
-                //         icon: Icon(Icons.person, color: Colors.white),
-                //         onPressed: null,
-                //       )),
-                //   trailing: Icon(
-                //     Icons.keyboard_arrow_right,
-                //     color: Colors.grey,
-                //   ),
-                //   onTap: () {
-                //     Navigator.of(context).push(MaterialPageRoute(
-                //         builder: (BuildContext context) => EditProfilePage()));
-                //   },
-                // ),
+                ListTile(
+                  contentPadding:
+                      EdgeInsets.only(left: 0, right: 10, top: 20, bottom: 10),
+                  title: Text(
+                    "Profile Settings",
+                    style: GoogleFonts.montserrat(
+                        color: Color.fromRGBO(59, 57, 60, 1),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  subtitle: Text(
+                    username ?? '',
+                    style: greyTExt,
+                  ),
+                  leading: CircleAvatar(
+                      backgroundColor: Colors.orange,
+                      child: IconButton(
+                        icon: Icon(Icons.person, color: Colors.white),
+                        onPressed: null,
+                      )),
+                  trailing: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.grey,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) => EditProfilePage()));
+                  },
+                ),
                 ListTile(
                   contentPadding:
                       EdgeInsets.only(left: 0, right: 10, bottom: 10),

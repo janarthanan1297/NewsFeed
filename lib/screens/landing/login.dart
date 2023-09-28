@@ -3,6 +3,7 @@ import 'package:News_Feed/home.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:News_Feed/screens/landing/forgotpassword.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
@@ -310,6 +311,10 @@ class _LoginState extends State<Login> {
           .signInWithEmailAndPassword(
               email: emailController.text.trim(),
               password: passwordController.text.trim());
+      Fluttertoast.showToast(
+          msg: 'Welcome to NewsFeed',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Home()),

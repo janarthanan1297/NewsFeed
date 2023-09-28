@@ -50,21 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAxab1T9sxzAwsExKmHBIzqew0WN4P2gtA',
-    appId: '1:842329593125:android:95f68e8ef27aad5b2536cc',
-    messagingSenderId: '842329593125',
-    projectId: 'newsfeed-ae077',
-    storageBucket: 'newsfeed-ae077.appspot.com',
+    apiKey: 'AIzaSyAbXwgYh3aJlVOhF1v5IAdX0kayDl9yjBI',
+    appId: '1:526854315913:android:cde16ffb436a6a3b3b4b58',
+    messagingSenderId: '526854315913',
+    projectId: 'newsfeed-1297',
+    storageBucket: 'newsfeed-1297.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDZmNubnWtehcM84vb2fsv2c0n98DlgeF0',
-    appId: '1:842329593125:ios:714b15c19769fded2536cc',
-    messagingSenderId: '842329593125',
-    projectId: 'newsfeed-ae077',
-    storageBucket: 'newsfeed-ae077.appspot.com',
-    androidClientId: '842329593125-8gikoov4qmt9tpoqdufeg4hpv39igesc.apps.googleusercontent.com',
-    iosClientId: '842329593125-3llqfcpdu5a7djrqea5v89behvsd2dcg.apps.googleusercontent.com',
-    iosBundleId: 'com.example.newsfeed',
+    apiKey: 'AIzaSyBRKdfVHzLzKTsTMuFetj_zZDlBa0kCmCs',
+    appId: '1:526854315913:ios:93f0e13a4c8cf1e73b4b58',
+    messagingSenderId: '526854315913',
+    projectId: 'newsfeed-1297',
+    storageBucket: 'newsfeed-1297.appspot.com',
+    androidClientId: '526854315913-kq9jk0pi4mlatds1f9vhtbvvu30dinf3.apps.googleusercontent.com',
+    iosClientId: '526854315913-i87lo87r7e6l9lu0k4ur879pvmvvbpo1.apps.googleusercontent.com',
+    iosBundleId: 'com.newsfeed.app',
   );
 }
